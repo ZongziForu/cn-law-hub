@@ -44,6 +44,7 @@ from common import (
     write_jsonl,
     write_text,
 )
+from common.ratelimit import _get_limiter
 
 try:
     from bs4 import BeautifulSoup
@@ -96,6 +97,7 @@ def discover_channel_id(session, code_name: str) -> str:
     for path in possible_paths:
         url = f"{BASE_URL}{path}"
         try:
+            _get_limiter().acquire()
             resp = session.get(url, headers=HEADERS, timeout=15)
             resp.encoding = "utf-8"
             match = re.search(r'channelId\s*=\s*["\']([^"\']+)["\']', resp.text)
@@ -108,6 +110,7 @@ def discover_channel_id(session, code_name: str) -> str:
 
     # Fallback: use the main page
     try:
+        _get_limiter().acquire()
         resp = session.get(f"{BASE_URL}/", headers=HEADERS, timeout=15)
         resp.encoding = "utf-8"
         match = re.search(r'channelId\s*=\s*["\']([^"\']+)["\']', resp.text)
@@ -133,6 +136,7 @@ def create_session():
     session.verify = False
 
     # Initialize session by visiting the main page
+    _get_limiter().acquire()
     session.get(f"{BASE_URL}/", timeout=15)
     return session
 
@@ -157,6 +161,7 @@ def fetch_category(
         "relateSubChannels": False,
     }
 
+    _get_limiter().acquire()
     resp = session.post(
         API_URL,
         json=payload,
