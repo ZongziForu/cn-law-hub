@@ -17,7 +17,7 @@
 9. **生态环境部法规规章** — `mee.gov.cn/ywgz/fgbz/`（法律、行政法规、规章）
 10. **最高人民法院发布栏目** — `court.gov.cn/fabu/`（司法解释、司法文件等）
 
-> This is a Claude Code / Kimi Agent / Codex skill for searching, verifying, downloading, and exporting Chinese legal documents from the three official databases above. The official databases are Chinese-language sources; Chinese keywords and official titles usually produce the best results.
+> This is a Claude Code / Kimi Agent / Codex skill for searching, verifying, downloading, and exporting Chinese legal documents from ten official databases above. The official databases are Chinese-language sources; Chinese keywords and official titles usually produce the best results.
 
 ---
 
@@ -61,7 +61,7 @@
 
 ## 功能概览
 
-- **多数据源支持**：NPC 国家法律法规数据库、国家规章库、外交条约库、国务院政策文件库、司法部行政法规库、党内法规库、国防部法规文库
+- **多数据源支持**：NPC 国家法律法规数据库、国家规章库、外交条约库、国务院政策文件库、司法部行政法规库、党内法规库、国防部法规文库、税务法规库、生态环境部法规规章、最高人民法院发布栏目
 - **标题/正文检索**：支持标题关键词、正文关键词两种搜索范围
 - **精确/模糊策略**：已知标题用 `--exact` 精确匹配，主题/关键词用模糊匹配
 - **现行有效状态筛选**：`--status 3` 仅返回现行有效法规
@@ -238,28 +238,51 @@ cn-law-hub/
 ├── SKILL.md                      # 给 agent 看的 skill 主文档
 ├── README.md                     # 本文件
 ├── requirements.txt              # Python 依赖
+├── requirements-dev.txt          # 开发依赖（测试/覆盖率）
 ├── scripts/
-│   ├── common.py                 # 共享工具：缓存、限速、HTTP、文件 I/O
+│   ├── common/                   # 共享工具包
+│   │   ├── __init__.py           # 统一导入与向后兼容别名
+│   │   ├── cache.py              # 缓存管理
+│   │   ├── chinese_numerals.py   # 中文数字转换
+│   │   ├── cli_utils.py          # CLI 参数辅助
+│   │   ├── constants.py          # 全局常量
+│   │   ├── docx_utils.py         # DOCX 解析与法条提取
+│   │   ├── file_io.py            # 文件读写
+│   │   ├── logger.py             # 日志
+│   │   ├── ratelimit.py          # HTTP 客户端与智能限速
+│   │   └── text_utils.py         # 文本清洗与工具函数
 │   ├── download.py               # NPC 搜索、下载、导出 URL、预览/查询法条
 │   ├── article_search.py         # NPC 跨法规法条级关键词搜索
 │   ├── gov_rules_crawler.py      # 国家规章库爬虫
 │   ├── treaty_crawler.py         # 外交条约库爬虫
+│   ├── gov_policy_library.py     # 国务院政策文件库
+│   ├── moj_law_crawler.py        # 司法部行政法规库
+│   ├── party_law_crawler.py      # 党内法规库 (12371.cn)
+│   ├── mod_law_crawler.py        # 国防部法规文库
+│   ├── tax_law_crawler.py        # 税务法规库 (国家税务总局)
+│   ├── mee_law_crawler.py        # 生态环境部法规规章
+│   ├── court_law_crawler.py      # 最高人民法院发布栏目
 │   └── region_classifier.py      # 地域分类与存在性矩阵
-└── references/
-    ├── api_reference.md          # NPC API 端点与参数参考
-    ├── gov_rules_api_reference.md # 国家规章库 API 与认证参考
-    ├── treaty_api_reference.md   # 外交条约库 HTML 结构参考
-    ├── batch_collection.md       # 200-300 条批量采集指南
-    ├── page_structure.md         # 页面结构说明
-    ├── kimi_bridge_adapter.md    # Claude Code / Kimi Agent 适配
-    └── codex_adapter.md          # Codex Chrome 插件适配
+├── references/
+│   ├── api_reference.md          # NPC API 端点与参数参考
+│   ├── gov_rules_api_reference.md # 国家规章库 API 与认证参考
+│   ├── gov_policy_api_reference.md # 国务院政策文件库 API 参考
+│   ├── treaty_api_reference.md   # 外交条约库 HTML 结构参考
+│   ├── batch_collection.md       # 200-300 条批量采集指南
+│   ├── page_structure.md         # 页面结构说明
+│   ├── kimi_bridge_adapter.md    # Claude Code / Kimi Agent 适配
+│   └── codex_adapter.md          # Codex Chrome 插件适配
+└── tests/
+    ├── test_article_search.py    # 法条搜索测试
+    └── test_download.py          # NPC 下载测试
 ```
 
 ---
 
 ## 致谢
 
-特别感谢 [Li2zon3](https://github.com/Li2zon3) 的 [`law-crawler-unified`](https://github.com/Li2zon3/law-crawler-unified) 项目，国家规章库（`scripts/gov_rules_crawler.py`）和外交条约库（`scripts/treaty_crawler.py`）的实现大量参考了其中的思路与方案，帮了很大的忙。
+- **数据源贡献者** — 感谢 [kasc0206](https://github.com/kasc0206) 在 [PR #1](https://github.com/ZongziForu/cn-law-hub/pull/1) 中贡献了国务院政策文件库、司法部行政法规库、党内法规库、国防部法规文库、税务法规库、生态环境部法规规章和最高人民法院发布栏目共 7 个爬虫脚本，将数据源从 3 个大幅扩展至 10 个，并重构了 `scripts/common/` 共享模块，补齐了测试与开发依赖，大大提升了本项目的覆盖面与工程质量。
+- 特别感谢 [Li2zon3](https://github.com/Li2zon3) 的 [`law-crawler-unified`](https://github.com/Li2zon3/law-crawler-unified) 项目，国家规章库（`scripts/gov_rules_crawler.py`）和外交条约库（`scripts/treaty_crawler.py`）的实现大量参考了其中的思路与方案，帮了很大的忙。
 
 ---
 
@@ -271,7 +294,7 @@ cn-law-hub/
 
 ## 免责声明
 
-本工具仅用于学习、研究、合规核验与个人/机构内部的辅助检索。请遵守 `flk.npc.gov.cn`、`gov.cn` 和 `treaty.mfa.gov.cn` 等官方数据库的使用规则，避免高频请求、重复批量抓取或对目标网站造成额外负担。
+本工具仅用于学习、研究、合规核验与个人/机构内部的辅助检索。请遵守 `flk.npc.gov.cn`、`gov.cn`、`treaty.mfa.gov.cn`、`xzfg.moj.gov.cn`、`12371.cn`、`mod.gov.cn`、`fgk.chinatax.gov.cn`、`mee.gov.cn` 和 `court.gov.cn` 等官方数据库的使用规则，避免高频请求、重复批量抓取或对目标网站造成额外负担。
 
 本项目的代码许可请以仓库中的 [LICENSE](LICENSE) 文件为准。需要特别声明的是，本项目不支持商业使用。这里所说的“不支持商业使用”，并非指代码本身不能用于商业活动环境（如律所办理案件的日常使用），而是指**不许可将本工具用于大量抓取官方法律数据库、镜像官方数据、转售数据、包装成收费数据服务或其他可能涉及官方数据再利用合规风险的商业化采集行为。**
 上述行为因其访问量较大，可能影响目标网站正常运营，且带有盈利性，具有合规风险。使用者应自行评估其使用场景的合法性、合规性和对官方公共资源的影响。
@@ -297,11 +320,18 @@ cn-law-hub/
 
 ## What this project does
 
-CN Law Hub is a Claude Code / Kimi Agent / Codex skill for searching, verifying, downloading, and exporting Chinese legal documents from three official databases:
+CN Law Hub is a Claude Code / Kimi Agent / Codex skill for searching, verifying, downloading, and exporting Chinese legal documents from ten official databases:
 
 - National Laws and Regulations Database (`flk.npc.gov.cn`)
 - State Council Rules Database (`gov.cn/zhengce/xxgk/gjgzk/`)
 - Ministry of Foreign Affairs Treaty Database (`treaty.mfa.gov.cn`)
+- State Council Policy Document Library (`sousuo.www.gov.cn`)
+- Ministry of Justice Administrative Regulations (`xzfg.moj.gov.cn`)
+- Party Regulations Database (`12371.cn/special/dnfg/`)
+- Ministry of National Defense Law Library (`mod.gov.cn/gfbw/fgwx/`)
+- State Taxation Administration Law Database (`fgk.chinatax.gov.cn`)
+- Ministry of Ecology and Environment Regulations (`mee.gov.cn/ywgz/fgbz/`)
+- Supreme People's Court Announcements (`court.gov.cn/fabu/`)
 
 ## Installation
 

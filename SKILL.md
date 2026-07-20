@@ -560,16 +560,24 @@ All crawler scripts support `--no-cache` and `--rate-limit {off|fixed|adaptive}`
 
 ## Script Reference Summary
 
-| Script                         | Purpose                              | Key CLI                                                                     | Output              |
-| ------------------------------ | ------------------------------------ | --------------------------------------------------------------------------- | ------------------- |
-| `scripts/download.py`          | NPC laws/regulations                 | `--search`, `--info`, `--download`, `--preview`, `--article`, `--urls-only` | stdout, files       |
-| `scripts/article_search.py`    | Article-level search across NPC laws | `keyword`, `--law`, `--range`, `--max-laws`, `--context`, `--json`          | stdout              |
-| `scripts/gov_rules_crawler.py` | Gov.cn rules database                | `--search`, `--categories`, `--size`, `--download`, `--info`                | `gov_rules_output/` |
-| `scripts/treaty_crawler.py`    | MFA treaty database                  | `--search`, `--collections`, `--size`, `--download`, `--info`               | `treaty_output/`    |
-| `scripts/region_classifier.py` | Province/city classification         | `--classify`, `--matrix`                                                    | JSON/CSV            |
+| Script                          | Purpose                                | Key CLI                                                                     | Output               |
+| ------------------------------- | -------------------------------------- | --------------------------------------------------------------------------- | -------------------- |
+| `scripts/download.py`           | NPC laws/regulations                   | `--search`, `--info`, `--download`, `--preview`, `--article`, `--urls-only` | stdout, files        |
+| `scripts/article_search.py`     | Article-level search across NPC laws   | `keyword`, `--law`, `--range`, `--max-laws`, `--context`, `--json`          | stdout               |
+| `scripts/gov_rules_crawler.py`  | Gov.cn rules database                  | `--search`, `--categories`, `--size`, `--download`, `--info`                | `gov_rules_output/`  |
+| `scripts/treaty_crawler.py`     | MFA treaty database                    | `--search`, `--collections`, `--size`, `--download`, `--info`               | `treaty_output/`     |
+| `scripts/gov_policy_library.py` | State Council policy library           | `--search`, `--info`, `--range`, `--category`, `--year`, `--size`           | `gov_policy_output/` |
+| `scripts/moj_law_crawler.py`    | MoJ administrative regulations         | `--search`, `--info`, `--range`, `--status`, `--size`                       | `moj_law_output/`    |
+| `scripts/party_law_crawler.py`  | Party regulations (12371.cn)           | `--search`, `--info`, `--category`, `--size`                                | `party_law_output/`  |
+| `scripts/mod_law_crawler.py`    | MOD law library                        | `--search`, `--info`, `--category`, `--size`                                | `mod_law_output/`    |
+| `scripts/tax_law_crawler.py`    | Tax regulations (chinatax)             | `--search`, `--info`, `--category`, `--size`                                | `tax_law_output/`    |
+| `scripts/mee_law_crawler.py`    | MEE environmental regulations          | `--search`, `--info`, `--category`, `--size`                                | `mee_law_output/`    |
+| `scripts/court_law_crawler.py`  | SPC judicial announcements             | `--search`, `--info`, `--category`, `--size`                                | `court_law_output/`  |
+| `scripts/region_classifier.py`  | Province/city classification           | `--classify`, `--matrix`                                                    | JSON/CSV             |
 
 ---
 
 ## Attribution
 
-Special thanks to [Li2zon3]for the [`law-crawler-unified`]project.
+- Data source contributors: [kasc0206](https://github.com/kasc0206) contributed the 7 crawler scripts for State Council Policy Library, MoJ Administrative Regulations, Party Regulations, MOD Law Library, Tax Regulations, MEE Regulations, and SPC Announcements in [PR #1](https://github.com/ZongziForu/cn-law-hub/pull/1), expanding coverage from 3 to 10 data sources and refactoring `scripts/common/` into a modular package.
+- Special thanks to [Li2zon3](https://github.com/Li2zon3) for the [`law-crawler-unified`](https://github.com/Li2zon3/law-crawler-unified) project, which inspired the Gov Rules and Treaty crawler implementations.
