@@ -237,8 +237,10 @@ classify_by_authority("广州市人民代表大会常务委员会")
 cn-law-hub/
 ├── SKILL.md                      # 给 agent 看的 skill 主文档
 ├── README.md                     # 本文件
+├── CHANGELOG.md                  # 更新日志
 ├── requirements.txt              # Python 依赖
 ├── requirements-dev.txt          # 开发依赖（测试/覆盖率）
+├── pytest.ini                    # pytest 配置
 ├── scripts/
 │   ├── common/                   # 共享工具包
 │   │   ├── __init__.py           # 统一导入与向后兼容别名
@@ -268,13 +270,34 @@ cn-law-hub/
 │   ├── gov_rules_api_reference.md # 国家规章库 API 与认证参考
 │   ├── gov_policy_api_reference.md # 国务院政策文件库 API 参考
 │   ├── treaty_api_reference.md   # 外交条约库 HTML 结构参考
-│   ├── batch_collection.md       # 200-300 条批量采集指南
-│   ├── page_structure.md         # 页面结构说明
+│   ├── setup.md                  # 环境配置与平台适配
+│   ├── batch_collection.md       # 批量采集指南
+│   ├── page_structure.md         # 页面结构与浏览器操作
 │   ├── kimi_bridge_adapter.md    # Claude Code / Kimi Agent 适配
-│   └── codex_adapter.md          # Codex Chrome 插件适配
+│   └── codex_adapter.md          # Codex 适配
 └── tests/
+    ├── conftest.py               # pytest fixtures
+    ├── fixtures/                 # 各数据源 mock 数据
+    │   ├── court/
+    │   ├── gov_policy/
+    │   ├── mee/
+    │   ├── mod/
+    │   ├── moj/
+    │   ├── party/
+    │   └── tax/
     ├── test_article_search.py    # 法条搜索测试
-    └── test_download.py          # NPC 下载测试
+    ├── test_common.py            # 共享模块测试
+    ├── test_download.py          # NPC 下载测试
+    ├── test_gov_policy_library.py # 国务院政策文件库测试
+    ├── test_moj_law_crawler.py   # 司法部行政法规库测试
+    ├── test_party_law_crawler.py # 党内法规库测试
+    ├── test_mod_law_crawler.py   # 国防部法规文库测试
+    ├── test_tax_law_crawler.py   # 税务法规库测试
+    ├── test_mee_law_crawler.py   # 生态环境部法规测试
+    ├── test_court_law_crawler.py # 最高法栏目测试
+    ├── test_new_sources_contract.py # 七源契约测试
+    ├── test_live_sources.py      # 在线冒烟测试（默认跳过）
+    └── test_region_classifier.py # 地域分类测试
 ```
 
 ---
