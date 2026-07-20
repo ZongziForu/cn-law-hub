@@ -101,11 +101,14 @@ apt-get install antiword catdoc
 
 如果你使用的是 Claude Code 或其他支持 skill 的 agent，可以直接把仓库链接丢给它，让 agent 自己完成克隆、安装依赖和注册 skill。复制以下提示词即可：
 
-> 帮我安装 cn-law-hub skill。仓库地址：https://github.com/ZongziForu/cn-law-hub。步骤：
-> 1. 将仓库 clone 到本地合适的位置。
-> 2. 进入目录，执行 `pip install -r requirements.txt`。
-> 3. 将整个目录注册为 Claude Code skill（或你所用 agent 支持的等价方式）。
-> 4. 注册完成后，用一句中文法律查询验证 skill 能正常触发（例如"帮我查一下《劳动合同法》第三十八条"）。
+> 帮我安装 cn-law-hub skill：https://github.com/ZongziForu/cn-law-hub
+>
+> 不要直接把整个仓库当 skill 目录。步骤如下：
+> 1. 克隆仓库到一个临时位置，安装依赖：`pip install -r requirements.txt`（Python 3.10+）。
+> 2. 创建一个干净的 skill 目录，只拷贝这些：`SKILL.md`、`scripts/`、`references/`、`requirements.txt`。
+> 3. 不要拷贝 `tests/`、`pytest.ini`、`CHANGELOG.md`、`requirements-dev.txt`、`*.pyc`、`__pycache__`。
+> 4. 将 skill 目录注册到 Claude Code（或你所用 agent 的等价方式）。
+> 5. 用"帮我查《劳动合同法》第三十八条"验证 skill 能正常触发。
 
 ---
 
