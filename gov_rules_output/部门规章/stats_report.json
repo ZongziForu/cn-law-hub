@@ -1,0 +1,14 @@
+{
+  "source": "gov_rules",
+  "category": "部门规章",
+  "record_count": 1,
+  "top_issuers": [
+    {
+      "name": "生态环境部 公安部 交通运输部",
+      "count": 1
+    }
+  ],
+  "publish_year_distribution": {
+    "2021": 1
+  }
+}

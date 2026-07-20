@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Unit tests for scripts/download.py."""
 
-import json
 import sys
 import unittest
 import zipfile
@@ -12,6 +11,7 @@ from unittest import mock
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
 import download as dl
+from common import chinese_to_int, extract_article_number, int_to_chinese
 
 
 class TestArgumentParser(unittest.TestCase):
@@ -26,10 +26,24 @@ class TestArgumentParser(unittest.TestCase):
         self.assertEqual(args.range, "title")
 
     def test_search_exact_and_pagination(self):
-        args = dl.build_parser().parse_args([
-            "--search", "物业管理条例", "--exact", "--page", "3", "--size", "100",
-            "--urls-only", "--format", "pdf", "--range", "content", "--status", "3"
-        ])
+        args = dl.build_parser().parse_args(
+            [
+                "--search",
+                "物业管理条例",
+                "--exact",
+                "--page",
+                "3",
+                "--size",
+                "100",
+                "--urls-only",
+                "--format",
+                "pdf",
+                "--range",
+                "content",
+                "--status",
+                "3",
+            ]
+        )
         self.assertEqual(args.search, "物业管理条例")
         self.assertTrue(args.exact)
         self.assertEqual(args.page, 3)
@@ -53,7 +67,9 @@ class TestArgumentParser(unittest.TestCase):
         self.assertEqual(args.output, "第三十八条")
 
     def test_download_with_output(self):
-        args = dl.build_parser().parse_args(["--download", "abc123", "--format", "pdf", "out.pdf"])
+        args = dl.build_parser().parse_args(
+            ["--download", "abc123", "--format", "pdf", "out.pdf"]
+        )
         self.assertEqual(args.download, "abc123")
         self.assertEqual(args.format, "pdf")
         self.assertEqual(args.output, "out.pdf")
@@ -69,7 +85,11 @@ class TestSearchLawsPayload(unittest.TestCase):
 
     @mock.patch("download._request")
     def test_fuzzy_payload(self, mock_request):
-        mock_request.return_value.json.return_value = {"code": 200, "rows": [], "total": 0}
+        mock_request.return_value.json.return_value = {
+            "code": 200,
+            "rows": [],
+            "total": 0,
+        }
         dl.search_laws("出租车", page=2, size=50)
         call = mock_request.call_args
         self.assertEqual(call.args[0], "POST")
@@ -83,14 +103,22 @@ class TestSearchLawsPayload(unittest.TestCase):
 
     @mock.patch("download._request")
     def test_exact_payload(self, mock_request):
-        mock_request.return_value.json.return_value = {"code": 200, "rows": [], "total": 0}
+        mock_request.return_value.json.return_value = {
+            "code": 200,
+            "rows": [],
+            "total": 0,
+        }
         dl.search_laws("物业管理条例", search_type=1)
         payload = mock_request.call_args.kwargs["json"]
         self.assertEqual(payload["searchType"], 1)
 
     @mock.patch("download._request")
     def test_status_filter(self, mock_request):
-        mock_request.return_value.json.return_value = {"code": 200, "rows": [], "total": 0}
+        mock_request.return_value.json.return_value = {
+            "code": 200,
+            "rows": [],
+            "total": 0,
+        }
         dl.search_laws("出租车", status_filter=[3])
         payload = mock_request.call_args.kwargs["json"]
         self.assertEqual(payload["sxx"], [3])
@@ -134,13 +162,30 @@ class TestCollectSearchUrls(unittest.TestCase):
             if bbbs == "id1":
                 return "https://example.com/1.doc"
             raise RuntimeError("no url")
+
         mock_get_url.side_effect = side_effect
 
         data = {
             "code": 200,
             "rows": [
-                {"bbbs": "id1", "title": "Law 1", "flxz": "A", "zdjgName": "X", "gbrq": "2020", "sxrq": "2020", "sxx": 3},
-                {"bbbs": "id2", "title": "Law 2", "flxz": "B", "zdjgName": "Y", "gbrq": "2020", "sxrq": "2020", "sxx": 3},
+                {
+                    "bbbs": "id1",
+                    "title": "Law 1",
+                    "flxz": "A",
+                    "zdjgName": "X",
+                    "gbrq": "2020",
+                    "sxrq": "2020",
+                    "sxx": 3,
+                },
+                {
+                    "bbbs": "id2",
+                    "title": "Law 2",
+                    "flxz": "B",
+                    "zdjgName": "Y",
+                    "gbrq": "2020",
+                    "sxrq": "2020",
+                    "sxx": 3,
+                },
             ],
         }
         results = dl.collect_search_urls(data)
@@ -156,7 +201,15 @@ class TestPrintSearchResults(unittest.TestCase):
             "code": 200,
             "total": 1,
             "rows": [
-                {"bbbs": "id1", "title": "Test <em>Law</em>", "flxz": "地方法规", "zdjgName": "广州市人大", "gbrq": "2020", "sxrq": "2020", "sxx": 3}
+                {
+                    "bbbs": "id1",
+                    "title": "Test <em>Law</em>",
+                    "flxz": "地方法规",
+                    "zdjgName": "广州市人大",
+                    "gbrq": "2020",
+                    "sxrq": "2020",
+                    "sxx": 3,
+                }
             ],
         }
         out = StringIO()
@@ -172,23 +225,33 @@ class TestPrintSearchResults(unittest.TestCase):
 class TestChineseNumerals(unittest.TestCase):
     def test_chinese_to_int(self):
         cases = [
-            ("一", 1), ("十", 10), ("十四", 14), ("三十八", 38),
-            ("一百零一", 101), ("二百一十七", 217), ("一千零一", 1001),
+            ("一", 1),
+            ("十", 10),
+            ("十四", 14),
+            ("三十八", 38),
+            ("一百零一", 101),
+            ("二百一十七", 217),
+            ("一千零一", 1001),
         ]
         for cn, expected in cases:
-            self.assertEqual(dl._chinese_to_int(cn), expected, f"failed for {cn}")
+            self.assertEqual(chinese_to_int(cn), expected, f"failed for {cn}")
 
     def test_int_to_chinese(self):
         cases = [
-            (1, "一"), (10, "十"), (14, "十四"), (38, "三十八"),
-            (101, "一百零一"), (217, "二百一十七"), (1001, "一千零一"),
+            (1, "一"),
+            (10, "十"),
+            (14, "十四"),
+            (38, "三十八"),
+            (101, "一百零一"),
+            (217, "二百一十七"),
+            (1001, "一千零一"),
         ]
         for n, expected in cases:
-            self.assertEqual(dl._int_to_chinese(n), expected, f"failed for {n}")
+            self.assertEqual(int_to_chinese(n), expected, f"failed for {n}")
 
     def test_round_trip(self):
         for n in range(1, 200):
-            self.assertEqual(dl._chinese_to_int(dl._int_to_chinese(n)), n)
+            self.assertEqual(chinese_to_int(int_to_chinese(n)), n)
 
 
 class TestArticleHelpers(unittest.TestCase):
@@ -200,8 +263,8 @@ class TestArticleHelpers(unittest.TestCase):
         self.assertFalse(dl._is_article_line("为了规范"))
 
     def test_extract_article_number(self):
-        self.assertEqual(dl._extract_article_number("第一条 为了规范"), "第一条")
-        self.assertEqual(dl._extract_article_number("第38条 内容"), "第38条")
+        self.assertEqual(extract_article_number("第一条 为了规范"), "第一条")
+        self.assertEqual(extract_article_number("第38条 内容"), "第38条")
 
     def test_split_into_articles(self):
         paragraphs = [

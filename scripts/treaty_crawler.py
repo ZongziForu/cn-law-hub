@@ -10,7 +10,6 @@ Usage:
 
 import argparse
 import json
-import os
 import re
 import sys
 from pathlib import Path
@@ -18,10 +17,20 @@ from urllib.parse import urljoin
 
 from common import (
     _CacheManager,
-    clean_text, ensure_dir, extract_year, format_request_exception,
-    DEFAULT_USER_AGENT,
-    get_cache, http_request, init_limiter, redact_url, render_markdown_report,
-    sanitize_filename, setup_logger, unique_path, write_csv, write_json, write_jsonl,
+    clean_text,
+    create_crawler_headers,
+    ensure_dir,
+    extract_year,
+    get_cache,
+    http_request,
+    init_limiter,
+    render_markdown_report,
+    sanitize_filename,
+    setup_logger,
+    unique_path,
+    write_csv,
+    write_json,
+    write_jsonl,
     write_text,
 )
 
@@ -37,10 +46,7 @@ COLLECTION_URLS = {
     "多边": "duobian.jsp?nPageIndex_={page}",
 }
 DEFAULT_COLLECTIONS = ["全部", "双边", "多边"]
-HEADERS = {
-    "User-Agent": DEFAULT_USER_AGENT,
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-}
+HEADERS = create_crawler_headers()
 
 _cache = get_cache("npc-law-db-treaty")
 
@@ -93,7 +99,11 @@ def _normalize_label(s: str) -> str:
 def parse_detail(detail_url: str) -> dict:
     soup = fetch_html(detail_url)
     if isinstance(soup, str):
-        return {"title": "", "detail_url": detail_url, "error": "BeautifulSoup not installed"}
+        return {
+            "title": "",
+            "detail_url": detail_url,
+            "error": "BeautifulSoup not installed",
+        }
 
     content = soup.select_one("div.neirong") or soup
     text = content.get_text("\n", strip=True)
@@ -107,7 +117,8 @@ def parse_detail(detail_url: str) -> dict:
 
     # Parse metadata table if present
     field_map = {
-        _normalize_label(k): v for k, v in {
+        _normalize_label(k): v
+        for k, v in {
             "类别：": "category",
             "领域：": "domain",
             "我国签署时间：": "sign_date",
@@ -193,8 +204,13 @@ def download_file(url: str, path: Path, timeout: int = 60) -> Path:
 # ---------------------------------------------------------------------------
 
 
-def search_collection(collection_name: str, keyword: str = "", max_items: int = None,
-                       max_pages: int = None, timeout: int = 30) -> list[dict]:
+def search_collection(
+    collection_name: str,
+    keyword: str = "",
+    max_items: int = None,
+    max_pages: int = None,
+    timeout: int = 30,
+) -> list[dict]:
     records = []
     first_page = fetch_html(collection_page_url(collection_name, 1), timeout=timeout)
     page_count = parse_page_count(first_page)
@@ -204,7 +220,13 @@ def search_collection(collection_name: str, keyword: str = "", max_items: int = 
     while True:
         if max_pages is not None and current_page > max_pages:
             break
-        soup = first_page if current_page == 1 else fetch_html(collection_page_url(collection_name, current_page), timeout=timeout)
+        soup = (
+            first_page
+            if current_page == 1
+            else fetch_html(
+                collection_page_url(collection_name, current_page), timeout=timeout
+            )
+        )
         items = parse_list_page(soup)
         if not items:
             break
@@ -214,8 +236,17 @@ def search_collection(collection_name: str, keyword: str = "", max_items: int = 
             try:
                 detail = parse_detail(item["detail_url"])
             except Exception as e:
-                detail = {"title": item["title"], "detail_url": item["detail_url"], "error": str(e)}
-            record = {"source": "treaty", "collection": collection_name, **detail, "downloaded_files": []}
+                detail = {
+                    "title": item["title"],
+                    "detail_url": item["detail_url"],
+                    "error": str(e),
+                }
+            record = {
+                "source": "treaty",
+                "collection": collection_name,
+                **detail,
+                "downloaded_files": [],
+            }
             records.append(record)
             if max_items is not None and len(records) >= max_items:
                 break
@@ -232,24 +263,37 @@ def search_collection(collection_name: str, keyword: str = "", max_items: int = 
 # ---------------------------------------------------------------------------
 
 
-def save_results(records: list[dict], output_dir: Path, collection_name: str,
-                  download_files: bool = True) -> Path:
-    collection_root = ensure_dir(output_dir / sanitize_filename(collection_name, collection_name))
+def save_results(
+    records: list[dict],
+    output_dir: Path,
+    collection_name: str,
+    download_files: bool = True,
+) -> Path:
+    collection_root = ensure_dir(
+        output_dir / sanitize_filename(collection_name, collection_name)
+    )
     files_root = ensure_dir(collection_root / "files")
 
     if download_files:
         for record in records:
             if not record.get("preview_links"):
                 continue
-            record_dir = ensure_dir(files_root / sanitize_filename(f"{record['title']}_{collection_name}", "treaty"))
+            record_dir = ensure_dir(
+                files_root
+                / sanitize_filename(f"{record['title']}_{collection_name}", "treaty")
+            )
             downloaded_files = []
             for idx, preview in enumerate(record["preview_links"], start=1):
                 try:
                     ext = Path(preview["url"].split("?")[0]).suffix or ".pdf"
-                    filename = sanitize_filename(f"{idx:02d}_{preview['label']}{ext}", f"{idx:02d}{ext}")
+                    filename = sanitize_filename(
+                        f"{idx:02d}_{preview['label']}{ext}", f"{idx:02d}{ext}"
+                    )
                     saved_path = download_file(preview["url"], record_dir / filename)
-                    downloaded_files.append(str(saved_path.relative_to(collection_root)))
-                except Exception as e:
+                    downloaded_files.append(
+                        str(saved_path.relative_to(collection_root))
+                    )
+                except Exception:
                     pass
             record["downloaded_files"] = downloaded_files
 
@@ -267,7 +311,9 @@ def save_results(records: list[dict], output_dir: Path, collection_name: str,
             sign_year_counts[year] = sign_year_counts.get(year, 0) + 1
 
     stats = {
-        "source": "treaty", "collection": collection_name, "record_count": len(records),
+        "source": "treaty",
+        "collection": collection_name,
+        "record_count": len(records),
         "domain_distribution": dict(sorted(domain_counts.items(), key=lambda x: -x[1])),
         "sign_year_distribution": dict(sorted(sign_year_counts.items())),
     }
@@ -282,7 +328,10 @@ def save_results(records: list[dict], output_dir: Path, collection_name: str,
         ],
     )
     write_text(collection_root / "stats_report.md", md)
-    write_json(collection_root / "summary.json", {"source": "treaty", "collection": collection_name, "count": len(records)})
+    write_json(
+        collection_root / "summary.json",
+        {"source": "treaty", "collection": collection_name, "count": len(records)},
+    )
     return collection_root
 
 
@@ -294,14 +343,28 @@ def save_results(records: list[dict], output_dir: Path, collection_name: str,
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="外交部条约数据库爬虫")
     parser.add_argument("--search", default="", help="Search keyword")
-    parser.add_argument("--collections", nargs="*", default=None, choices=list(COLLECTION_URLS.keys()))
-    parser.add_argument("--size", type=int, default=None, help="Max items per collection")
-    parser.add_argument("--max-pages", type=int, default=None, help="Max pages per collection")
+    parser.add_argument(
+        "--collections", nargs="*", default=None, choices=list(COLLECTION_URLS.keys())
+    )
+    parser.add_argument(
+        "--size", type=int, default=None, help="Max items per collection"
+    )
+    parser.add_argument(
+        "--max-pages", type=int, default=None, help="Max pages per collection"
+    )
     parser.add_argument("--download", action="store_true", help="Download preview PDFs")
-    parser.add_argument("--no-download", action="store_true", help="Metadata only (default)")
-    parser.add_argument("--info", default=None, help="Get detail for a specific treaty URL")
-    parser.add_argument("--output", "-o", default="./treaty_output", help="Output directory")
-    parser.add_argument("--rate-limit", choices=["auto", "off", "fixed", "adaptive"], default="auto")
+    parser.add_argument(
+        "--no-download", action="store_true", help="Metadata only (default)"
+    )
+    parser.add_argument(
+        "--info", default=None, help="Get detail for a specific treaty URL"
+    )
+    parser.add_argument(
+        "--output", "-o", default="./treaty_output", help="Output directory"
+    )
+    parser.add_argument(
+        "--rate-limit", choices=["auto", "off", "fixed", "adaptive"], default="auto"
+    )
     parser.add_argument("--timeout", type=int, default=30)
     parser.add_argument("--no-cache", action="store_true")
     parser.add_argument("--cache-stats", action="store_true")
@@ -339,20 +402,43 @@ def main() -> int:
 
     limiter, forced = init_limiter(args.rate_limit)
     collections = args.collections or DEFAULT_COLLECTIONS
-    limiter.init_for_task(estimated_requests=(args.size or 100) * len(collections), forced_mode=forced)
+    limiter.init_for_task(
+        estimated_requests=(args.size or 100) * len(collections), forced_mode=forced
+    )
 
     download_files = args.download and not args.no_download
-    logger.info("Start: collections=%s, keyword=%s, download=%s", collections, args.search, download_files)
+    logger.info(
+        "Start: collections=%s, keyword=%s, download=%s",
+        collections,
+        args.search,
+        download_files,
+    )
 
     results = []
     for collection in collections:
         logger.info("Collection: %s", collection)
-        records = search_collection(collection, keyword=args.search, max_items=args.size, max_pages=args.max_pages, timeout=args.timeout)
+        records = search_collection(
+            collection,
+            keyword=args.search,
+            max_items=args.size,
+            max_pages=args.max_pages,
+            timeout=args.timeout,
+        )
         collection_root = save_results(records, output_dir, collection, download_files)
-        results.append({"collection": collection, "count": len(records), "path": str(collection_root)})
+        results.append(
+            {
+                "collection": collection,
+                "count": len(records),
+                "path": str(collection_root),
+            }
+        )
         logger.info("Done: %d records", len(records))
 
-    summary = {"source": "treaty", "collections": results, "total": sum(r["count"] for r in results)}
+    summary = {
+        "source": "treaty",
+        "collections": results,
+        "total": sum(r["count"] for r in results),
+    }
     write_json(output_dir / "summary.json", summary)
     limiter.print_summary()
     logger.info("All done: %s", output_dir)

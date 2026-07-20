@@ -1,0 +1,8 @@
+2026-07-06 10:58:35 INFO Start: categories=['部门规章', '地方政府规章'], keyword=废弃电器电子产品, download=False
+2026-07-06 10:58:39 INFO Category: 部门规章
+2026-07-06 10:59:19 INFO Category: 地方政府规章
+2026-07-06 11:00:25 INFO Start: categories=['部门规章', '地方政府规章'], keyword=危险废物转移管理办法, download=False
+2026-07-06 11:00:27 INFO Category: 部门规章
+2026-07-06 11:00:28 INFO Category: 地方政府规章
+2026-07-06 11:01:08 INFO All done: /Users/kylin/github-project/cn-law-hub/gov_rules_output
+2026-07-06 11:01:08 INFO All done: /Users/kylin/github-project/cn-law-hub/gov_rules_output

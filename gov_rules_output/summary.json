@@ -1,0 +1,16 @@
+{
+  "source": "gov_rules",
+  "categories": [
+    {
+      "category": "部门规章",
+      "count": 1,
+      "path": "/Users/kylin/github-project/cn-law-hub/gov_rules_output/部门规章"
+    },
+    {
+      "category": "地方政府规章",
+      "count": 1,
+      "path": "/Users/kylin/github-project/cn-law-hub/gov_rules_output/地方政府规章"
+    }
+  ],
+  "total": 2
+}
