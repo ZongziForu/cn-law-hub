@@ -575,9 +575,3 @@ All crawler scripts support `--no-cache` and `--rate-limit {off|fixed|adaptive}`
 | `scripts/court_law_crawler.py`  | SPC judicial announcements             | `--search`, `--info`, `--category`, `--size`                                | `court_law_output/`  |
 | `scripts/region_classifier.py`  | Province/city classification           | `--classify`, `--matrix`                                                    | JSON/CSV             |
 
----
-
-## Attribution
-
-- Data source contributors: [kasc0206](https://github.com/kasc0206) contributed the 7 crawler scripts for State Council Policy Library, MoJ Administrative Regulations, Party Regulations, MOD Law Library, Tax Regulations, MEE Regulations, and SPC Announcements in [PR #1](https://github.com/ZongziForu/cn-law-hub/pull/1), expanding coverage from 3 to 10 data sources and refactoring `scripts/common/` into a modular package.
-- Special thanks to [Li2zon3](https://github.com/Li2zon3) for the [`law-crawler-unified`](https://github.com/Li2zon3/law-crawler-unified) project, which inspired the Gov Rules and Treaty crawler implementations.
