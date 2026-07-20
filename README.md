@@ -97,6 +97,18 @@ apt-get install antiword catdoc
 
 ---
 
+### 一键安装（用 Agent 自动配置）
+
+如果你使用的是 Claude Code 或其他支持 skill 的 agent，可以直接把仓库链接丢给它，让 agent 自己完成克隆、安装依赖和注册 skill。复制以下提示词即可：
+
+> 帮我安装 cn-law-hub skill。仓库地址：https://github.com/ZongziForu/cn-law-hub。步骤：
+> 1. 将仓库 clone 到本地合适的位置。
+> 2. 进入目录，执行 `pip install -r requirements.txt`。
+> 3. 将整个目录注册为 Claude Code skill（或你所用 agent 支持的等价方式）。
+> 4. 注册完成后，用一句中文法律查询验证 skill 能正常触发（例如"帮我查一下《劳动合同法》第三十八条"）。
+
+---
+
 ## 快速开始
 
 多数情况下，你不需要手动执行下面的命令。只要用自然语言向 agent 描述任务，agent 会根据 `SKILL.md` 自动选择合适的数据源、脚本和参数。
