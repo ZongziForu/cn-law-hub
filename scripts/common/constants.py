@@ -3,7 +3,10 @@
 import os
 import re
 
-VERIFY_SSL = os.getenv("NPC_LAW_VERIFY_SSL", "0") == "1"
+# TLS: default ON. Set CN_LAW_VERIFY_SSL=0 to disable. NPC_LAW_VERIFY_SSL is a
+# backward-compatible alias.
+_verify_env = os.getenv("CN_LAW_VERIFY_SSL") or os.getenv("NPC_LAW_VERIFY_SSL")
+VERIFY_SSL = _verify_env != "0" if _verify_env is not None else True
 NO_CACHE = os.getenv("NPC_LAW_NO_CACHE", "0") == "1"
 MAX_RETRIES = 4
 

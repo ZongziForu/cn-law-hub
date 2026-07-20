@@ -1,18 +1,16 @@
 """Smart rate limiter and HTTP client with retry/429 handling."""
 
 import random
+import sys
 import time
 from dataclasses import dataclass
 from enum import Enum, auto
 from typing import Optional
 
 import requests
-import urllib3
-
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 from .constants import BASE_BACKOFF, MAX_BACKOFF, MAX_RETRIES, RETRYABLE_STATUS_CODES, VERIFY_SSL
-from .text_utils import format_request_exception
+from .text_utils import format_request_exception, redact_url
 
 
 class RateLimitMode(Enum):
@@ -192,44 +190,90 @@ def _backoff(attempt: int) -> float:
     return max(0.1, exp + jitter)
 
 
-def http_request(method, url, headers=None, **kwargs):
-    """Make an HTTP request with rate limiting, 429 handling, and retries."""
+def http_request(method, url, headers=None, session=None, allowed_statuses=None, **kwargs):
+    """Make an HTTP request with rate limiting, 429 handling, and retries.
+
+    Args:
+        method: HTTP method (GET, POST, etc.)
+        url: Request URL
+        headers: Optional dict of headers
+        session: Optional requests.Session (preserves cookies across calls)
+        allowed_statuses: Optional set of non-2xx status codes to accept
+        **kwargs: Passed to requests.request() / session.request()
+
+    Raises:
+        RuntimeError: On 401/403/404, other non-retryable 4xx, or after
+                      exhausting retries on 429/5xx.
+    """
     kwargs.setdefault("timeout", kwargs.pop("timeout", 30))
     kwargs.setdefault("verify", VERIFY_SSL)
 
     limiter = _get_limiter()
-    limiter.acquire()
+    requester = session if session is not None else requests
 
     last_err = None
     for attempt in range(1, MAX_RETRIES + 1):
+        limiter.acquire()
         try:
             start = time.time()
-            resp = requests.request(method, url, headers=headers, **kwargs)
+            if session is not None:
+                resp = session.request(method, url, headers=headers, **kwargs)
+            else:
+                resp = requests.request(method, url, headers=headers, **kwargs)
             elapsed_ms = (time.time() - start) * 1000
 
+            # 429 — rate limited, backoff and retry
             if resp.status_code == 429:
                 limiter.report_429()
-                last_err = "HTTP 429"
+                last_err = f"HTTP 429 url={redact_url(url)}"
                 if attempt < MAX_RETRIES:
                     continue
-                raise RuntimeError(f"HTTP 429 Too Many Requests after {MAX_RETRIES} retries")
+                raise RuntimeError(
+                    f"HTTP 429 Too Many Requests after {MAX_RETRIES} retries"
+                )
 
+            # Retryable server errors
             if resp.status_code in RETRYABLE_STATUS_CODES:
                 last_err = f"HTTP {resp.status_code}"
                 if attempt < MAX_RETRIES:
                     time.sleep(_backoff(attempt))
                     continue
-                raise RuntimeError(f"HTTP {resp.status_code} after {MAX_RETRIES} retries")
+                raise RuntimeError(
+                    f"HTTP {resp.status_code} after {MAX_RETRIES} retries"
+                )
 
-            limiter.report_success(elapsed_ms)
-
-            if elapsed_ms > 2000:
-                limiter.report_slow(elapsed_ms)
-
-            if resp.status_code < 500:
+            # 2xx — success
+            if 200 <= resp.status_code < 300:
+                limiter.report_success(elapsed_ms)
+                if elapsed_ms > 2000:
+                    limiter.report_slow(elapsed_ms)
                 return resp
 
+            # Allowed non-2xx (caller explicitly accepts, e.g. 403 for probes)
+            if allowed_statuses and resp.status_code in allowed_statuses:
+                return resp
+
+            # 401/403 — access denied, no retry
+            if resp.status_code in (401, 403):
+                raise RuntimeError(
+                    f"HTTP {resp.status_code} (access denied): {redact_url(url)}"
+                )
+
+            # 404 — not found, no retry
+            if resp.status_code == 404:
+                raise RuntimeError(
+                    f"HTTP 404 Not Found: {redact_url(url)}"
+                )
+
+            # Other 4xx — client error, no retry
+            if 400 <= resp.status_code < 500:
+                raise RuntimeError(
+                    f"HTTP {resp.status_code} (client error): {redact_url(url)}"
+                )
+
+            # Remaining 5xx
             last_err = f"HTTP {resp.status_code}"
+
         except requests.RequestException as e:
             last_err = format_request_exception(e)
 

@@ -24,9 +24,6 @@ from pathlib import Path
 from urllib.parse import urljoin
 
 import requests
-import urllib3
-
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 from common import (
     DEFAULT_USER_AGENT,
@@ -44,7 +41,6 @@ from common import (
     write_jsonl,
     write_text,
 )
-from common.ratelimit import _get_limiter
 
 try:
     from bs4 import BeautifulSoup
@@ -97,8 +93,7 @@ def discover_channel_id(session, code_name: str) -> str:
     for path in possible_paths:
         url = f"{BASE_URL}{path}"
         try:
-            _get_limiter().acquire()
-            resp = session.get(url, headers=HEADERS, timeout=15)
+            resp = http_request("GET", url, headers=HEADERS, session=session, timeout=15)
             resp.encoding = "utf-8"
             match = re.search(r'channelId\s*=\s*["\']([^"\']+)["\']', resp.text)
             if match:
@@ -110,8 +105,7 @@ def discover_channel_id(session, code_name: str) -> str:
 
     # Fallback: use the main page
     try:
-        _get_limiter().acquire()
-        resp = session.get(f"{BASE_URL}/", headers=HEADERS, timeout=15)
+        resp = http_request("GET", f"{BASE_URL}/", headers=HEADERS, session=session, timeout=15)
         resp.encoding = "utf-8"
         match = re.search(r'channelId\s*=\s*["\']([^"\']+)["\']', resp.text)
         if match:
@@ -133,11 +127,9 @@ def create_session():
     """Create a requests Session and initialize it with the main page."""
     session = requests.Session()
     session.headers.update(HEADERS)
-    session.verify = False
 
     # Initialize session by visiting the main page
-    _get_limiter().acquire()
-    session.get(f"{BASE_URL}/", timeout=15)
+    http_request("GET", f"{BASE_URL}/", headers=HEADERS, session=session, timeout=15)
     return session
 
 
@@ -161,14 +153,15 @@ def fetch_category(
         "relateSubChannels": False,
     }
 
-    _get_limiter().acquire()
-    resp = session.post(
+    resp = http_request(
+        "POST",
         API_URL,
         json=payload,
         headers={
             "Content-Type": "application/json",
             "Referer": f"{BASE_URL}/zcfgk/{code_name}/listflfg.html",
         },
+        session=session,
         timeout=timeout,
     )
     data = resp.json()
