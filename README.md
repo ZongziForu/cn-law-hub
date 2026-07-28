@@ -1,6 +1,6 @@
 # CN Law Hub
 
-[![GitHub](https://img.shields.io/badge/GitHub-ZongziForu%2Fcn--law--hub-blue)](https://github.com/ZongziForu/cn-law-hub)
+[![GitHub](https://img.shields.io/badge/GitHub-ZongziForu%2Fcn--law--hub-blue)](https://github.com/ZongziForu/cn-law-hub) [![小红书](https://img.shields.io/badge/小红书-RedSkill%20市场-red)](http://xhslink.cn/o/3HYck1C99xr)
 
 一个用于查询、检索、核验、下载、导出和批量采集中国官方法律数据的 Claude Code / Kimi Agent / Codex skill。
 
@@ -212,7 +212,14 @@ python scripts/download.py --no-cache --info <bbbs_id>
 python scripts/download.py --cache-clear
 ```
 
-缓存位置：`~/.cache/npc-law-db/`
+缓存位置：`~/.cache/{namespace}/`（共 10 个 namespace，每个数据源独立）。
+
+**缓存 TTL 与自动清理：**
+- 搜索结果/列表页缓存：30 分钟 ~ 1 小时
+- 详情/元数据缓存：24 小时
+- DOCX 下载缓存：7 天
+- 过期缓存由 `CacheManager` 在每次运行时机会式自动清理（每 7 天最多完整扫描一次），无需手动干预
+- `--cache-clear` 用于立即清空当前数据源的全部缓存
 
 ### 地域分类
 

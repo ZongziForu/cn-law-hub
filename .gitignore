@@ -30,3 +30,6 @@ evals/
 
 # Crawler output (generated data, not source code)
 *_output/
+
+# Local documentation (not for distribution)
+缓存模式更新.md
