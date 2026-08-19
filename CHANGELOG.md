@@ -1,5 +1,32 @@
 # 更新日志
 
+## v2.0.1 — MCP 接入与缓存自动清理 (2026-08-19)
+
+### 新增：MCP 接入（可选）
+
+在保留 Skill 主路径不变的前提下，提供标准 MCP 接入：
+
+- 新增 `scripts/mcp_server.py`：单个 stdio server，暴露 5 个工具（`search_laws` 统一路由 10 个数据源、`get_law_detail`、`query_article`、`preview_law`、`article_search`）
+- 新增 `.mcp.json`（Claude Code 自动读取）与 `references/mcp_setup.md`（其他 agent 配置）
+- 复用全部现有爬虫函数，不修改任何 `SKILL.md` / `scripts/*.py`
+- 依赖：`pip install "mcp>=2.0.0"`（可选，Skill/CLI 不需要）
+
+### 新增：缓存自动清理
+
+`scripts/common/cache.py` 增加机会式、低频过期清理：
+
+- `.json` 缓存最长保留 24h，`.bin/.meta` 二进制缓存最长保留 7 天
+- 每次初始化 `CacheManager` 时通过 `.last_cleanup` 时间戳节流，每 7 天最多完整扫描一次
+- 静默运行，异常不阻断初始化；`stats()` 忽略标记文件
+
+### 其他
+
+- README 首屏重构：H1 改为「CN Law Hub — 中国法条检索 / PRC Statute & Regulation Search for AI Agents」，前置中英定位句与六项能力块，便于搜索引擎 / AI rerank 抽取实体关系
+- 一键安装节补充 Skill 版 vs MCP 版选择说明，以及从 Releases 安装的方式
+- 测试：新增 `tests/test_mcp_tools.py`（25 个），全量 305 passed / 7 skipped
+
+---
+
 ## v2.0 — 数据源大幅扩展与工程质量升级 (2026-07-20)
 
 ### 新增七个官方数据源

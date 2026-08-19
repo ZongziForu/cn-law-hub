@@ -1,23 +1,14 @@
-# CN Law Hub
+# CN Law Hub — 中国法条检索 / PRC Statute & Regulation Search for AI Agents
 
 [![GitHub](https://img.shields.io/badge/GitHub-ZongziForu%2Fcn--law--hub-blue)](https://github.com/ZongziForu/cn-law-hub) [![小红书](https://img.shields.io/badge/小红书-RedSkill%20市场-red)](http://xhslink.cn/o/3HYck1C99xr)
 
-一个用于查询、检索、核验、下载、导出和批量采集中国官方法律数据的 Claude Code / Kimi Agent / Codex skill。
+面向 Claude Code、Codex、Kimi 等 AI Agent 的中国大陆法条与法律法规检索 Skill，直接检索全国人大、国务院、司法部、最高人民法院等 10 个官方来源，支持具体条文检索、跨法规正文搜索、现行有效筛选与官方原文下载。
 
-支持十个官方数据源：
+CN Law Hub is an agent skill and retrieval toolkit for searching PRC statutes, regulations and specific legal articles from official Chinese government sources, with article-level search and validity-status filtering.
 
-1. **国家法律法规数据库 (NPC)** — `flk.npc.gov.cn`
-2. **国家规章库 (Gov Rules)** — `gov.cn/zhengce/xxgk/gjgzk/`
-3. **外交条约库 (Treaty)** — `treaty.mfa.gov.cn`
-4. **国务院政策文件库** — `sousuo.www.gov.cn/zcwjk/policyDocumentLibrary`
-5. **司法部行政法规库** — `xzfg.moj.gov.cn`
-6. **党内法规库** — `www.12371.cn/special/dnfg/`
-7. **国防部法规文库** — `www.mod.gov.cn/gfbw/fgwx/`
-8. **税务法规库** — `fgk.chinatax.gov.cn`
-9. **生态环境部法规规章** — `mee.gov.cn/ywgz/fgbz/`（法律、行政法规、规章）
-10. **最高人民法院发布栏目** — `court.gov.cn/fabu/`（司法解释、司法文件等）
-
-> This is a Claude Code / Kimi Agent / Codex skill for searching, verifying, downloading, and exporting Chinese legal documents from ten official databases above. The official databases are Chinese-language sources; Chinese keywords and official titles usually produce the best results.
+| Official sources | Article-level search | Cross-law search |
+|---|---|---|
+| Validity filtering | Chinese local & national regulations | Claude Code & Codex |
 
 ---
 
@@ -75,6 +66,21 @@
 - **地域/制定机关分类**：内置省市映射，自动识别国家级、省级、设区市级
 - **多环境支持**：Kimi Agent、Claude Code via kimi-webbridge、Codex；其中 Kimi Agent 与 Claude Code via kimi-webbridge 共用同一套 browser adapter，因为两者的浏览器操作语义一致
 
+### 数据源
+
+| 数据源 | 来源 |
+|---|---|
+| 国家法律法规数据库 (NPC) | `flk.npc.gov.cn` |
+| 国家规章库 (Gov Rules) | `gov.cn/zhengce/xxgk/gjgzk/` |
+| 外交条约库 (Treaty) | `treaty.mfa.gov.cn` |
+| 国务院政策文件库 | `sousuo.www.gov.cn/zcwjk/policyDocumentLibrary` |
+| 司法部行政法规库 | `xzfg.moj.gov.cn` |
+| 党内法规库 | `www.12371.cn/special/dnfg/` |
+| 国防部法规文库 | `www.mod.gov.cn/gfbw/fgwx/` |
+| 税务法规库 | `fgk.chinatax.gov.cn` |
+| 生态环境部法规规章 | `mee.gov.cn/ywgz/fgbz/` |
+| 最高人民法院发布栏目 | `court.gov.cn/fabu/` |
+
 ---
 
 ## 安装
@@ -95,23 +101,51 @@ brew install antiword catdoc
 apt-get install antiword catdoc
 ```
 
+如需通过 **MCP** 接入（可选，见下文）：
+
+```bash
+pip install "mcp>=2.0.0"
+```
+
 ---
 
-### 一键安装（用 Agent 自动配置）
+### 一键安装
 
-如果你使用的是 Claude Code 或其他支持 skill 的 agent，可以直接把仓库链接丢给它，让 agent 自己完成克隆、安装依赖和注册 skill。复制以下提示词即可：
+两种接入方式**二选一**，代码相同，只是接入形态不同：
 
-> 请安装并配置这个 Skill：https://github.com/ZongziForu/cn-law-hub
+| | **Skill 版**（推荐，主路径） | **MCP 版**（可选） |
+|---|---|---|
+| 形态 | 注册为 agent 的 Skill，自然语言或 `/cn-law-hub` 调用 | 一个 stdio server，暴露 5 个 MCP 工具 |
+| 适用 | Claude Code / Codex / Kimi 等支持 skill 的 agent | 任意 MCP 兼容 agent（Claude Code / Cline / Cursor / Kimi / Codex） |
+| 依赖 | 仅 `requirements.txt` | 额外 `pip install "mcp>=2.0.0"` |
+| 配置 | agent 注册 skill | 见 `references/mcp_setup.md`；Claude Code 自动读 `.mcp.json` |
+
+发布版请从 [Releases](https://github.com/ZongziForu/cn-law-hub/releases) 下载 `Source code` 压缩包。
+
+#### 方式 A：Skill 版（用 Agent 自动配置）
+
+直接把仓库链接丢给 agent，让它自己完成下载、安装依赖和注册 skill。复制以下提示词即可：
+
+> 请安装并配置这个 Skill：https://github.com/ZongziForu/cn-law-hub/releases/tag/v2.0.1
 >
-> 先阅读仓库中的 SKILL.md 和 references/setup.md，并识别当前平台正确的 skills 目录。不要直接把整个 Git 仓库复制到最终安装目录；请先下载到临时目录，再仅安装以下运行时文件：
+> 从上述 release 下载 Source code 压缩包，或 clone 仓库。先阅读仓库中的 SKILL.md 和 references/setup.md，并识别当前平台正确的 skills 目录。不要直接把整个仓库复制到最终安装目录；请先下载到临时目录，再仅安装以下运行时文件：
 > - `SKILL.md`
 > - `scripts/`
 > - `references/`
 > - `requirements.txt`
 >
-> 不要拷贝 `tests/`、`pytest.ini`、`CHANGELOG.md`、`requirements-dev.txt`、`*.pyc`、`__pycache__`。
+> 不要拷贝 `tests/`、`pytest.ini`、`CHANGELOG.md`、`requirements-dev.txt`、`.mcp.json`、`*.pyc`、`__pycache__`。
 >
 > 安装依赖：`pip install -r requirements.txt`（Python 3.10+）。注册完成后，用"帮我查《劳动合同法》第三十八条"验证。
+
+#### 方式 B：MCP 版
+
+```bash
+pip install "mcp>=2.0.0"
+python3 scripts/mcp_server.py        # 启动 stdio server（等待 MCP 客户端连接）
+```
+
+Claude Code 打开仓库即自动读取根目录 [`.mcp.json`](.mcp.json) 接入；其他 agent 的配置方法见 [`references/mcp_setup.md`](references/mcp_setup.md)。
 
 ---
 
@@ -256,6 +290,41 @@ classify_by_authority("广州市人民代表大会常务委员会")
 
 ---
 
+## MCP 接入（可选）
+
+**MCP 版是什么**：把同一套检索能力封装成一个标准 MCP server（一个进程、
+5 个工具），任何 MCP 兼容 agent 都能连接调用。它与 Skill 版共享全部
+`scripts/` 爬虫代码，`mcp_server.py` 只做转发，不修改任何现有文件。
+
+**和 Skill 版怎么选**：
+- 用 **Skill 版**：想让 agent 根据自然语言自动选数据源、直接 `/cn-law-hub` 调用，或需要下载原文、批量采集等完整工作流 —— 这是主路径。
+- 用 **MCP 版**：更习惯"一个 server、N 个工具"的显式调用，或你的 agent 支持 MCP 但不支持自定义 skill（如 Cursor、Cline）。
+
+```bash
+pip install "mcp>=2.0.0"
+python3 scripts/mcp_server.py        # 启动 stdio server（等待 MCP 客户端连接）
+```
+
+```bash
+pip install "mcp>=2.0.0"
+python3 scripts/mcp_server.py        # 启动 stdio server（等待 MCP 客户端连接）
+```
+
+Claude Code 会自动读取仓库根目录的 [`.mcp.json`](.mcp.json)，打开项目即接入；
+其他 agent 的配置见 [`references/mcp_setup.md`](references/mcp_setup.md)。
+
+提供 5 个工具：
+
+| 工具 | 说明 |
+|---|---|
+| `search_laws(source, keyword, category?, size?)` | 统一搜索 10 个数据源 |
+| `get_law_detail(source, url)` | 拉取单条记录详情 |
+| `query_article(bbbs_id, query?, grep?)` | 按条号/关键词查单部法律法条 |
+| `preview_law(bbbs_id)` | 预览法律结构（条数 / 编号格式 / 前 20 条） |
+| `article_search(keyword, law_keyword?, max_laws?, context?)` | 跨法规法条级搜索 |
+
+---
+
 ## 文件结构
 
 ```
@@ -266,6 +335,7 @@ cn-law-hub/
 ├── requirements.txt              # Python 依赖
 ├── requirements-dev.txt          # 开发依赖（测试/覆盖率）
 ├── pytest.ini                    # pytest 配置
+├── .mcp.json                     # Claude Code MCP 配置（可选，MCP 接入用）
 ├── scripts/
 │   ├── common/                   # 共享工具包
 │   │   ├── __init__.py           # 统一导入与向后兼容别名
@@ -289,6 +359,7 @@ cn-law-hub/
 │   ├── tax_law_crawler.py        # 税务法规库 (国家税务总局)
 │   ├── mee_law_crawler.py        # 生态环境部法规规章
 │   ├── court_law_crawler.py      # 最高人民法院发布栏目
+│   ├── mcp_server.py             # MCP server（可选接入，复用各爬虫函数）
 │   └── region_classifier.py      # 地域分类与存在性矩阵
 ├── references/
 │   ├── api_reference.md          # NPC API 端点与参数参考
@@ -299,7 +370,8 @@ cn-law-hub/
 │   ├── batch_collection.md       # 批量采集指南
 │   ├── page_structure.md         # 页面结构与浏览器操作
 │   ├── kimi_bridge_adapter.md    # Claude Code / Kimi Agent 适配
-│   └── codex_adapter.md          # Codex 适配
+│   ├── codex_adapter.md          # Codex 适配
+│   └── mcp_setup.md              # MCP 接入配置（Claude Code / 其他 agent）
 └── tests/
     ├── conftest.py               # pytest fixtures
     ├── fixtures/                 # 各数据源 mock 数据
@@ -396,6 +468,13 @@ brew install antiword catdoc
 # Debian/Ubuntu
 apt-get install antiword catdoc
 ```
+
+### Optional MCP access
+
+The skill path remains the primary way to use this repo. MCP is an optional
+extra: `scripts/mcp_server.py` exposes the same sources as tools to any
+MCP-compatible agent. Install with `pip install "mcp>=2.0.0"` and see
+`references/mcp_setup.md`.
 
 ## Quick Start
 
