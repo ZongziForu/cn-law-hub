@@ -4,7 +4,20 @@
 
 面向 Claude Code、Codex、Kimi 等 AI Agent 的中国大陆法条与法律法规检索 Skill，直接检索全国人大、国务院、司法部、最高人民法院等 10 个官方来源，支持具体条文检索、跨法规正文搜索、现行有效筛选与官方原文下载。
 
-CN Law Hub is an agent skill and retrieval toolkit for searching PRC statutes, regulations and specific legal articles from official Chinese government sources, with article-level search and validity-status filtering.
+Chinese legal research Agent Skill for retrieving and verifying Chinese laws from official sources.
+
+**覆盖 10 个官方数据源：**
+
+1. **国家法律法规数据库（NPC）** — `flk.npc.gov.cn`
+2. **国家规章库（Gov Rules）** — `gov.cn/zhengce/xxgk/gjgzk/`
+3. **外交条约库（Treaty）** — `treaty.mfa.gov.cn`
+4. **国务院政策文件库** — `sousuo.www.gov.cn`
+5. **司法部行政法规库** — `xzfg.moj.gov.cn`
+6. **党内法规库** — `www.12371.cn/special/dnfg/`
+7. **国防部法规文库** — `www.mod.gov.cn/gfbw/fgwx/`
+8. **税务法规库** — `fgk.chinatax.gov.cn`
+9. **生态环境部法规规章** — `mee.gov.cn/ywgz/fgbz/`
+10. **最高人民法院发布栏目** — `court.gov.cn/fabu/`
 
 | Official sources | Article-level search | Cross-law search |
 |---|---|---|
@@ -66,21 +79,6 @@ CN Law Hub is an agent skill and retrieval toolkit for searching PRC statutes, r
 - **地域/制定机关分类**：内置省市映射，自动识别国家级、省级、设区市级
 - **多环境支持**：Kimi Agent、Claude Code via kimi-webbridge、Codex；其中 Kimi Agent 与 Claude Code via kimi-webbridge 共用同一套 browser adapter，因为两者的浏览器操作语义一致
 
-### 数据源
-
-| 数据源 | 来源 |
-|---|---|
-| 国家法律法规数据库 (NPC) | `flk.npc.gov.cn` |
-| 国家规章库 (Gov Rules) | `gov.cn/zhengce/xxgk/gjgzk/` |
-| 外交条约库 (Treaty) | `treaty.mfa.gov.cn` |
-| 国务院政策文件库 | `sousuo.www.gov.cn/zcwjk/policyDocumentLibrary` |
-| 司法部行政法规库 | `xzfg.moj.gov.cn` |
-| 党内法规库 | `www.12371.cn/special/dnfg/` |
-| 国防部法规文库 | `www.mod.gov.cn/gfbw/fgwx/` |
-| 税务法规库 | `fgk.chinatax.gov.cn` |
-| 生态环境部法规规章 | `mee.gov.cn/ywgz/fgbz/` |
-| 最高人民法院发布栏目 | `court.gov.cn/fabu/` |
-
 ---
 
 ## 安装
@@ -133,6 +131,9 @@ pip install "mcp>=2.0.0"
 > - `scripts/`
 > - `references/`
 > - `requirements.txt`
+> - `LICENSE`
+> - `LICENSE-APACHE`
+> - `NOTICE`
 >
 > 不要拷贝 `tests/`、`pytest.ini`、`CHANGELOG.md`、`requirements-dev.txt`、`.mcp.json`、`*.pyc`、`__pycache__`。
 >
@@ -332,6 +333,10 @@ cn-law-hub/
 ├── SKILL.md                      # 给 agent 看的 skill 主文档
 ├── README.md                     # 本文件
 ├── CHANGELOG.md                  # 更新日志
+├── LICENSE                       # 临时竞赛许可证 v1.1（2026-09-21 前生效）
+├── LICENSE-APACHE                # Apache-2.0 标准文本（2026-09-21 起生效）
+├── NOTICE                        # 版权与贡献者声明（Apache-2.0 要求）
+├── CITATION.cff                  # 机器可读引用信息
 ├── requirements.txt              # Python 依赖
 ├── requirements-dev.txt          # 开发依赖（测试/覆盖率）
 ├── pytest.ini                    # pytest 配置
@@ -416,8 +421,13 @@ cn-law-hub/
 
 本工具仅用于学习、研究、合规核验与个人/机构内部的辅助检索。请遵守 `flk.npc.gov.cn`、`gov.cn`、`treaty.mfa.gov.cn`、`xzfg.moj.gov.cn`、`12371.cn`、`mod.gov.cn`、`fgk.chinatax.gov.cn`、`mee.gov.cn` 和 `court.gov.cn` 等官方数据库的使用规则，避免高频请求、重复批量抓取或对目标网站造成额外负担。
 
-本项目的代码许可请以仓库中的 [LICENSE](LICENSE) 文件为准。需要特别声明的是，本项目不支持商业使用。这里所说的“不支持商业使用”，并非指代码本身不能用于商业活动环境（如律所办理案件的日常使用），而是指**不许可将本工具用于大量抓取官方法律数据库、镜像官方数据、转售数据、包装成收费数据服务或其他可能涉及官方数据再利用合规风险的商业化采集行为。**
-上述行为因其访问量较大，可能影响目标网站正常运营，且带有盈利性，具有合规风险。使用者应自行评估其使用场景的合法性、合规性和对官方公共资源的影响。
+本项目的代码许可请以仓库中的 [LICENSE](LICENSE) 文件为准。这个工具之前一直没有写 license，在此坦诚说明一下：
+
+> 这个工具之前一直没有写license。本人下个月参加法大的第四届大学生数据法治实验模型竞赛，可能要在作品中使用这个工具里的部分代码，为了避免作品的功能冲突，请其他参赛选手不要以本工具作为核心功能之一。9.20提交作品后，本项目自动转为Apache-2.0。
+
+因此在 **2026-09-21 00:00:00（CST）** 之前，本项目为**源码开放**（source-available）的临时竞赛许可证（[LICENSE](LICENSE)）：一般情况下可自由使用、修改、分发，唯一例外是**不得将本工具作为第四届大学生数据法治实验模型竞赛参赛作品的核心功能之一**。到期后自动转为 Apache-2.0（[LICENSE-APACHE](LICENSE-APACHE)），届时不再有任何使用限制。
+
+此外，尽管许可证允许，本项目仍不建议**大量抓取官方法律数据库、镜像官方数据、转售数据、包装成收费数据服务**等可能涉及官方数据再利用合规风险的商业化采集行为。上述行为访问量较大，可能影响目标网站正常运营，且带有盈利性，具有合规风险。使用者应自行评估其使用场景的合法性、合规性和对官方公共资源的影响。
 
 本工具不提供法律意见，也不能替代律师、合规顾问或官方渠道的判断。对于法律文本的时效性、完整性和适用性，请以官方公布内容为准。
 
@@ -432,6 +442,23 @@ cn-law-hub/
 | 小红书     | 只有肉粽子才算是粽子ney！ | [点击访问](https://xhslink.com/m/5XGgBInSyJc)                 |
 | 微信公众号 | 正在施工的二层楼          | [点击访问](https://mp.weixin.qq.com/s/KUhM7u6ajCfLsw0KDXluZQ) |
 | 邮箱       | —                         | `yqc0122@163.com`                                             |
+
+---
+
+## Citation
+
+如果你在论文、报告、课程作业或参赛作品中使用了本工具，欢迎按如下方式引用：
+
+```bibtex
+@software{cn_law_hub_2026,
+  author = {ZongziForu},
+  title = {CN Law Hub: Chinese Legal Research and Retrieval Agent Skill},
+  year = {2026},
+  url = {https://github.com/ZongziForu/cn-law-hub}
+}
+```
+
+机器可读的引用信息见仓库中的 [CITATION.cff](CITATION.cff)。
 
 ---
 
@@ -503,6 +530,10 @@ The official databases are Chinese-language sources; Chinese keywords and offici
 
 ## Disclaimer
 
-The code license is governed by the repository [LICENSE](LICENSE). The recommendation against commercial use refers to large-scale extraction, mirroring, resale, or paid repackaging of official legal data, which may raise compliance risks. This tool does not provide legal advice; official publications remain authoritative.
+CN Law Hub has long shipped without a license. Its author is joining the 4th Data Rule-of-Law Experimental Model Competition (第四届大学生数据法治实验模型竞赛) at China University of Political Science and Law next month and may reuse part of this project's code in their entry. To avoid feature conflicts between competition entries, other contestants are asked not to use this tool as a core feature of their entries. After the entry is submitted on 9.20, the project automatically transitions to Apache-2.0.
+
+Until 2026-09-21 00:00:00 CST, the project is under the source-available CN Law Hub Temporary Competition License v1.1 ([LICENSE](LICENSE)): general use, modification and redistribution are permitted, except that the tool (or a substantial part of it) may not be used as a core feature of a Competition entry before the Transition Time. From 2026-09-21 CST onward, it is licensed under Apache-2.0 ([LICENSE-APACHE](LICENSE-APACHE)).
+
+Although the license permits commercial use, large-scale extraction, mirroring, resale, or paid repackaging of official legal data is not recommended, as it may raise compliance risks. This tool does not provide legal advice; official publications remain authoritative.
 
 </details>

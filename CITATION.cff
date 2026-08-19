@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "CN Law Hub: Chinese Legal Research and Retrieval Agent Skill"
+authors:
+  - family-names: Yuan
+    given-names: Qichen
+    affiliation: "中国人民大学"
+date-released: "2026-08-19"
+version: "2.0.1"
+url: "https://github.com/ZongziForu/cn-law-hub"

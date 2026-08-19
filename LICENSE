@@ -1,0 +1,378 @@
+# CN Law Hub Temporary Competition License v1.1
+
+Copyright © 2026 ZongziForu
+
+Effective Date: August 19, 2026
+
+Transition Time: September 21, 2026, 00:00:00 China Standard Time (UTC+8)
+
+---
+
+## 1. Purpose
+
+CN Law Hub is a source-available Chinese legal research and retrieval project developed with contributions from both the project maintainer and community contributors.
+
+This License is intended to:
+
+1. allow free general use of the portions of CN Law Hub authored by ZongziForu;
+2. temporarily restrict those portions from being used to develop or operate entries in the **第四届大学生数据法治实验模型竞赛**;
+3. respect the independent rights of community contributors in their own contributions; and
+4. automatically release the Licensor-Owned Core under the Apache License 2.0 after the Competition submission deadline.
+
+---
+
+## 2. Definitions
+
+### 2.1 “Licensor”
+
+“Licensor” means **ZongziForu**, the original author and maintainer of CN Law Hub.
+
+### 2.2 “Software”
+
+“Software” means the CN Law Hub repository, including source code, scripts, Agent Skills, prompts, documentation, configurations, utilities, retrieval infrastructure, and other materials contained in the repository.
+
+### 2.3 “Licensor-Owned Core”
+
+“Licensor-Owned Core” means all original portions of CN Law Hub authored by the Licensor and for which the Licensor owns the applicable copyright.
+
+This includes, without limitation:
+
+1. the original three legal database integrations implemented by the Licensor;
+2. the overall CN Law Hub Agent Skill architecture;
+3. original `SKILL.md` content and other original instructions, descriptions, prompts, routing logic, and tool-use guidance;
+4. caching infrastructure;
+5. cache management and cache invalidation logic;
+6. data cleaning and preprocessing logic;
+7. normalization and canonicalization logic;
+8. retrieval, request, parsing, storage, export, and processing infrastructure;
+9. common utilities and shared abstractions;
+10. source-selection, fallback, verification, and orchestration logic;
+11. original documentation authored by the Licensor; and
+12. subsequent modifications to the foregoing authored by the Licensor.
+
+For avoidance of doubt, the Licensor-Owned Core does **not** include independently copyrightable portions authored by third-party contributors merely because those portions have been merged into the CN Law Hub repository.
+
+### 2.4 “Contributor Components”
+
+“Contributor Components” means independently copyrightable code or other material authored by third-party contributors.
+
+In particular, the following crawler or source-adapter implementations are identified as Contributor Components to the extent they were authored by third-party contributors:
+
+1. **国务院政策文件库 crawler / adapter**
+   Source: `sousuo.www.gov.cn/zcwjk/policyDocumentLibrary`
+
+2. **司法部行政法规库 crawler / adapter**
+   Source: `xzfg.moj.gov.cn`
+
+3. **党内法规库 crawler / adapter**
+   Source: `www.12371.cn/special/dnfg/`
+
+4. **国防部法规文库 crawler / adapter**
+   Source: `www.mod.gov.cn/gfbw/fgwx/`
+
+5. **税务法规库 crawler / adapter**
+   Source: `fgk.chinatax.gov.cn`
+
+6. **生态环境部法规规章 crawler / adapter**
+   Source: `mee.gov.cn/ywgz/fgbz/`
+
+7. **最高人民法院发布栏目 crawler / adapter**
+
+Contributor Components are **not subject to the Temporary Competition Restriction in Section 4 merely by virtue of their inclusion in this repository**.
+
+The copyright and licensing status of each Contributor Component remains governed by the rights and permissions granted by its respective contributor.
+
+Nothing in this License purports to grant, restrict, relicense, or otherwise exercise rights in a Contributor Component that the Licensor does not own or have authority to license.
+
+Where a file contains both Licensor-Owned Core and Contributor Components, this License applies only to the portions authored by the Licensor.
+
+### 2.5 “Competition”
+
+“Competition” means the:
+
+**第四届大学生数据法治实验模型竞赛**
+
+### 2.6 “Competition Entry”
+
+“Competition Entry” means any model, AI agent, software system, application, service, prototype, demonstration, backend, retrieval system, submission, or other work developed, submitted, demonstrated, or operated for participation in the Competition.
+
+### 2.7 “Competition Use”
+
+“Competition Use” means using the Licensor-Owned Core, directly or indirectly, to:
+
+* develop;
+* build;
+* modify;
+* test;
+* evaluate;
+* validate;
+* operate;
+* host;
+* demonstrate;
+* support; or
+* submit
+
+a Competition Entry.
+
+Competition Use includes using the Licensor-Owned Core as a separate backend, API, local service, remote service, MCP tool, Agent Skill, command-line tool, retrieval service, data-processing service, or other technical dependency of a Competition Entry.
+
+### 2.8 “Transition Time”
+
+“Transition Time” means:
+
+**September 21, 2026, 00:00:00 China Standard Time (UTC+8).**
+
+---
+
+## 3. General Permission Before the Transition Time
+
+Before the Transition Time, subject to Section 4, the Licensor grants any person obtaining a copy of the Licensor-Owned Core a worldwide, royalty-free, non-exclusive permission to:
+
+* use it for personal purposes;
+* use it for educational purposes;
+* use it for academic research;
+* use it for legal research;
+* use it for software development;
+* use it for testing and evaluation;
+* use it for commercial purposes;
+* copy it;
+* modify it;
+* create derivative works;
+* integrate it into software, AI agents, services, or other systems; and
+* redistribute copies or modified versions.
+
+Any redistribution of a substantial portion of the Licensor-Owned Core before the Transition Time must retain:
+
+1. this copyright notice; and
+2. this License.
+
+The permissions granted by this Section are subject only to the Temporary Competition Restriction described in Section 4 and the other terms of this License.
+
+---
+
+## 4. Temporary Competition Restriction
+
+Before the Transition Time, the Licensor-Owned Core may **not**, without prior written permission from the Licensor, be used for Competition Use.
+
+In particular, before the Transition Time, a person may not use the Licensor-Owned Core to:
+
+1. directly incorporate CN Law Hub's Licensor-Owned Core into a Competition Entry;
+
+2. incorporate a modified or derivative version of the Licensor-Owned Core into a Competition Entry;
+
+3. use the Licensor-Owned Core as the legal retrieval, legal verification, legal data access, caching, normalization, cleaning, processing, orchestration, or Agent Skill infrastructure of a Competition Entry;
+
+4. invoke the Licensor-Owned Core from a Competition Entry through a local or remote API, service, process, command, MCP interface, Agent tool, Skill interface, or similar technical mechanism;
+
+5. deploy the Licensor-Owned Core separately while providing its functionality to a Competition Entry;
+
+6. copy or adapt Licensor-authored prompts, Skill definitions, retrieval logic, caching logic, normalization logic, source orchestration, or other protected implementation into a Competition Entry; or
+
+7. use a derivative work substantially based on the Licensor-Owned Core for a Competition Entry.
+
+This restriction applies regardless of whether the Licensor-Owned Core is technically packaged inside the Competition Entry or operated as a separate dependency or service.
+
+The Licensor may grant exceptions to this Section through explicit written permission.
+
+---
+
+## 5. What the Competition Restriction Does Not Prohibit
+
+Section 4 does **not** prohibit a Competition participant or any other person from:
+
+* viewing the public CN Law Hub repository;
+* reading its source code;
+* studying its architecture;
+* evaluating CN Law Hub independently from a Competition Entry;
+* discussing or reviewing the project;
+* citing CN Law Hub in academic or technical materials;
+* learning general programming, retrieval, Agent, caching, normalization, or legal research techniques from the project;
+* using ideas, concepts, methods, algorithms, interfaces, or techniques that are not themselves protected expressions;
+* independently implementing similar functionality without copying protected portions of the Licensor-Owned Core; or
+* using Contributor Components where such use is permitted by the applicable contributor.
+
+The purpose of Section 4 is to prevent direct or indirect reuse of the Licensor-Owned Core as part of a Competition Entry, not to prohibit independent learning or independent implementation.
+
+---
+
+## 6. Contributor Components
+
+The Temporary Competition Restriction applies only to the Licensor-Owned Core.
+
+It does **not** apply to independently copyrightable Contributor Components owned by third-party contributors.
+
+For avoidance of doubt, the Licensor does not claim exclusive copyright ownership merely because a third-party contribution has been merged into the CN Law Hub repository.
+
+A user wishing to copy, modify, redistribute, or use a Contributor Component must comply with the license or permission applicable to that Contributor Component.
+
+If a contributor has expressly licensed their contribution under Apache License 2.0 or another license, that license governs the contributor's contribution.
+
+If no explicit license or permission has been provided by the contributor, this License should not be interpreted as creating such permission on the contributor's behalf.
+
+---
+
+## 7. Mixed Files and Modifications
+
+A source file may contain contributions authored by multiple copyright holders.
+
+Where a file contains both:
+
+* Licensor-Owned Core; and
+* Contributor Components,
+
+the Temporary Competition Restriction applies only to the portions for which the Licensor owns the applicable rights.
+
+A third-party modification to a Licensor-authored file does not cause the Licensor's pre-existing code in that file to cease being part of the Licensor-Owned Core.
+
+Likewise, merging a third-party contribution into the repository does not by itself transfer that contributor's copyright to the Licensor.
+
+---
+
+## 8. Automatic Transition to Apache License 2.0
+
+At the Transition Time:
+
+**the Temporary Competition Restriction automatically expires in its entirety.**
+
+From the Transition Time onward, all portions of the Licensor-Owned Core covered by this License are licensed by the Licensor under the:
+
+**Apache License, Version 2.0 (“Apache-2.0”).**
+
+No Competition-specific restriction contained in this License applies after the Transition Time.
+
+After the Transition Time, recipients may exercise all rights granted by Apache-2.0 with respect to the Licensor-Owned Core, subject solely to the terms and conditions of Apache-2.0.
+
+A copy of Apache License 2.0 should be included in this repository as:
+
+`LICENSE-APACHE`
+
+For clarity:
+
+**2026-09-20 23:59:59 CST and earlier:**
+The Licensor-Owned Core is governed by this Temporary Competition License.
+
+**2026-09-21 00:00:00 CST and later:**
+The Licensor-Owned Core is governed by Apache License 2.0.
+
+The change occurs automatically and does not require any additional action, commit, announcement, or approval by the Licensor.
+
+---
+
+## 9. Official Legal Materials and External Data
+
+This License applies only to software, prompts, documentation, Agent Skills, and other original materials for which the Licensor owns or is authorized to exercise the applicable rights.
+
+This License does not claim ownership of, or grant rights in:
+
+* laws;
+* administrative regulations;
+* departmental rules;
+* judicial interpretations;
+* judicial documents;
+* policy documents;
+* Party regulations;
+* treaties;
+* government publications;
+* official database content;
+* third-party websites;
+* third-party APIs;
+* third-party datasets; or
+* other externally sourced materials.
+
+The fact that CN Law Hub retrieves, indexes, caches, downloads, cleans, normalizes, parses, exports, references, or processes external content does not cause that external content to become licensed under this License.
+
+External materials remain subject to applicable law and any terms or rights governing their respective sources.
+
+---
+
+## 10. Third-Party Dependencies
+
+Third-party software libraries, packages, APIs, and other dependencies distributed with or used by CN Law Hub remain subject to their respective licenses.
+
+Nothing in this License alters, replaces, restricts, or expands the terms of a third-party license.
+
+---
+
+## 11. Attribution
+
+Before the Transition Time, redistribution of a substantial portion of the Licensor-Owned Core must retain:
+
+**Copyright © 2026 ZongziForu**
+
+and a copy of this License.
+
+After the Transition Time, attribution and notice requirements are governed by Apache License 2.0.
+
+Nothing in this Section requires attribution for independently developed software that does not copy or distribute the Licensor-Owned Core.
+
+---
+
+## 12. No Trademark or Endorsement License
+
+This License does not grant permission to use the names:
+
+* “CN Law Hub”; or
+* “ZongziForu”
+
+or any associated logo or branding in a way that falsely states or implies sponsorship, endorsement, certification, or official affiliation.
+
+Accurate attribution and truthful references to CN Law Hub are permitted.
+
+---
+
+## 13. Termination Before the Transition Time
+
+Before the Transition Time, the permissions granted under Section 3 automatically terminate with respect to any person or entity that materially violates Section 4.
+
+Termination applies only to rights granted by the Licensor under this License and does not affect rights independently granted by third-party contributors.
+
+The Licensor may reinstate terminated permission through explicit written authorization.
+
+Regardless of any prior termination, at the Transition Time the Licensor-Owned Core becomes available under Apache License 2.0 according to Section 8.
+
+---
+
+## 14. Disclaimer of Warranty
+
+THE LICENSOR-OWNED CORE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, ACCURACY, COMPLETENESS, AVAILABILITY, NON-INFRINGEMENT, OR FITNESS FOR LEGAL PRACTICE.
+
+CN LAW HUB IS A TECHNICAL INFORMATION-RETRIEVAL AND PROCESSING TOOL.
+
+IT DOES NOT CONSTITUTE LEGAL ADVICE AND DOES NOT GUARANTEE THAT ANY RETRIEVED LAW, REGULATION, POLICY, JUDICIAL MATERIAL, OR OTHER INFORMATION IS CURRENT, COMPLETE, OR APPLICABLE TO A PARTICULAR MATTER.
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE LICENSOR SHALL NOT BE LIABLE FOR ANY CLAIM, DAMAGE, LOSS, OR OTHER LIABILITY ARISING FROM OR RELATED TO THE LICENSOR-OWNED CORE OR ITS USE.
+
+---
+
+## 15. Nature of This License
+
+Before the Transition Time, this License contains a specific field-of-use restriction relating to the Competition.
+
+Accordingly, before the Transition Time, the Licensor-Owned Core should be described as:
+
+**source-available software**
+
+rather than as software distributed under an OSI-approved open-source license.
+
+At and after the Transition Time, the Licensor-Owned Core is licensed under Apache License 2.0 and may be described accordingly.
+
+---
+
+## 16. Entire Scope of the Temporary Restriction
+
+The Competition restriction in this License applies exclusively to:
+
+**the Licensor-Owned Core authored by ZongziForu.**
+
+It does not purport to impose a Competition restriction upon independently copyrightable community contributions owned by their respective contributors.
+
+The temporary restriction exists solely for the Competition identified in Section 2.5 and expires permanently at the Transition Time.
+
+No general prohibition on competition, commercial use, academic use, legal use, AI development, Agent development, or other fields of endeavor applies.
+
+---
+
+CN Law Hub
+Temporary Competition License v1.1
+
+Copyright © 2026 ZongziForu
