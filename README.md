@@ -132,7 +132,6 @@ pip install "mcp>=2.0.0"
 > - `references/`
 > - `requirements.txt`
 > - `LICENSE`
-> - `LICENSE-APACHE`
 > - `NOTICE`
 >
 > 不要拷贝 `tests/`、`pytest.ini`、`CHANGELOG.md`、`requirements-dev.txt`、`.mcp.json`、`*.pyc`、`__pycache__`。
@@ -333,8 +332,7 @@ cn-law-hub/
 ├── SKILL.md                      # 给 agent 看的 skill 主文档
 ├── README.md                     # 本文件
 ├── CHANGELOG.md                  # 更新日志
-├── LICENSE                       # 临时竞赛许可证 v1.1（2026-09-21 前生效）
-├── LICENSE-APACHE                # Apache-2.0 标准文本（2026-09-21 起生效）
+├── LICENSE                       # Apache License 2.0 全文
 ├── NOTICE                        # 版权与贡献者声明（Apache-2.0 要求）
 ├── CITATION.cff                  # 机器可读引用信息
 ├── requirements.txt              # Python 依赖
@@ -421,11 +419,13 @@ cn-law-hub/
 
 本工具仅用于学习、研究、合规核验与个人/机构内部的辅助检索。请遵守 `flk.npc.gov.cn`、`gov.cn`、`treaty.mfa.gov.cn`、`xzfg.moj.gov.cn`、`12371.cn`、`mod.gov.cn`、`fgk.chinatax.gov.cn`、`mee.gov.cn` 和 `court.gov.cn` 等官方数据库的使用规则，避免高频请求、重复批量抓取或对目标网站造成额外负担。
 
-本项目的代码许可请以仓库中的 [LICENSE](LICENSE) 文件为准。这个工具之前一直没有写 license，在此坦诚说明一下：
+本项目的代码许可请以仓库中的 [LICENSE](LICENSE) 文件为准。
 
-> 这个工具之前一直没有写license。本人下个月参加法大的第四届大学生数据法治实验模型竞赛，可能要在作品中使用这个工具里的部分代码，为了避免作品的功能冲突，请其他参赛选手不要以本工具作为核心功能之一。9.20提交作品后，本项目自动转为Apache-2.0。
+本项目采用 **Apache License 2.0** 授权：可自由使用、修改、分发，包括商业用途，只需保留版权与许可声明（见 [NOTICE](NOTICE)）。
 
-因此在 **2026-09-21 00:00:00（CST）** 之前，本项目为**源码开放**（source-available）的临时竞赛许可证（[LICENSE](LICENSE)）：一般情况下可自由使用、修改、分发，唯一例外是**不得将本工具作为第四届大学生数据法治实验模型竞赛参赛作品的核心功能之一**。到期后自动转为 Apache-2.0（[LICENSE-APACHE](LICENSE-APACHE)），届时不再有任何使用限制。
+> 历史说明：本项目曾使用一份临时竞赛许可证（CN Law Hub Temporary Competition License v1.1），用于在 2026-09-21 前限制本工具被用作第四届大学生数据法治实验模型竞赛参赛作品的核心功能。按其自身第 8 节，该限制已于 **2026-09-21 00:00:00（CST）** 自动失效，此后本项目即按 Apache-2.0 授权，不再有任何使用限制。该许可证全文仍可在 git 历史中查阅。
+
+> ⚠️ 注意：上述许可证变更发生在最近一次发布之后，**已发布的 release 压缩包（截至 v2.0.2）尚未同步**——其中的 `LICENSE` 仍是旧的临时竞赛许可证，并且额外带有一个 `LICENSE-APACHE` 文件。请以本仓库当前的 [`LICENSE`](LICENSE)（Apache-2.0 全文）为准；从旧 release 安装的用户，可忽略压缩包内的 `LICENSE` 与 `LICENSE-APACHE`，本项目实际已按 Apache-2.0 授权。
 
 此外，尽管许可证允许，本项目仍不建议**大量抓取官方法律数据库、镜像官方数据、转售数据、包装成收费数据服务**等可能涉及官方数据再利用合规风险的商业化采集行为。上述行为访问量较大，可能影响目标网站正常运营，且带有盈利性，具有合规风险。使用者应自行评估其使用场景的合法性、合规性和对官方公共资源的影响。
 
@@ -530,9 +530,11 @@ The official databases are Chinese-language sources; Chinese keywords and offici
 
 ## Disclaimer
 
-CN Law Hub has long shipped without a license. Its author is joining the 4th Data Rule-of-Law Experimental Model Competition (第四届大学生数据法治实验模型竞赛) at China University of Political Science and Law next month and may reuse part of this project's code in their entry. To avoid feature conflicts between competition entries, other contestants are asked not to use this tool as a core feature of their entries. After the entry is submitted on 9.20, the project automatically transitions to Apache-2.0.
+CN Law Hub is licensed under the [Apache License 2.0](LICENSE): free to use, modify and redistribute, including commercially, provided copyright and license notices are retained (see [NOTICE](NOTICE)).
 
-Until 2026-09-21 00:00:00 CST, the project is under the source-available CN Law Hub Temporary Competition License v1.1 ([LICENSE](LICENSE)): general use, modification and redistribution are permitted, except that the tool (or a substantial part of it) may not be used as a core feature of a Competition entry before the Transition Time. From 2026-09-21 CST onward, it is licensed under Apache-2.0 ([LICENSE-APACHE](LICENSE-APACHE)).
+Historically, the project used a temporary competition license (CN Law Hub Temporary Competition License v1.1) to restrict use of the tool as a core feature of entries in the 4th Data Rule-of-Law Experimental Model Competition (第四届大学生数据法治实验模型竞赛) before 2026-09-21. By its own Section 8, that restriction expired automatically at 2026-09-21 00:00:00 CST, and the project has been licensed under Apache-2.0 since. The full text of that license remains available in the git history.
+
+> ⚠️ Note: this license change landed after the most recent release, so the **published release archives (up to v2.0.2) have not been updated** — their `LICENSE` is still the old temporary competition license, and they additionally contain a `LICENSE-APACHE` file. The current [`LICENSE`](LICENSE) in this repository (full Apache-2.0 text) governs; users installing from an older release may disregard the `LICENSE` and `LICENSE-APACHE` files inside the archive, as the project is in fact licensed under Apache-2.0.
 
 Although the license permits commercial use, large-scale extraction, mirroring, resale, or paid repackaging of official legal data is not recommended, as it may raise compliance risks. This tool does not provide legal advice; official publications remain authoritative.
 

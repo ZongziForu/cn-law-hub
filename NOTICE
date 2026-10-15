@@ -20,15 +20,20 @@ Ownership and 权属说明
 The CN Law Hub repository is maintained by ZongziForu. Unless otherwise
 stated, the repository as a whole and the original code, prompts,
 documentation and other materials authored by ZongziForu are owned by
-ZongziForu.
+ZongziForu and licensed under the Apache License, Version 2.0 (see the
+LICENSE file).
 
 Code or other material authored by third-party contributors remains the
-property of its respective contributor and is not transferred to the
-Licensor merely because it has been merged into this repository. Each
-contributor Component is governed by the rights and permissions granted
+property of its respective contributor and is not transferred to
+ZongziForu merely because it has been merged into this repository. Each
+contributor component is governed by the rights and permissions granted
 by its respective contributor.
 
-Before 2026-09-21 00:00:00 China Standard Time (UTC+8), the original
-material authored by ZongziForu is governed by the LICENSE file (CN Law
-Hub Temporary Competition License v1.1). At and after that time, it is
-licensed under the Apache License, Version 2.0 (see LICENSE-APACHE).
+Nothing in this repository's license purports to grant, restrict,
+relicense, or otherwise exercise rights in a contributor component that
+ZongziForu does not own or have authority to license. Where a file
+contains both original material authored by ZongziForu and contributor
+components, the license applies only to the portions authored by
+ZongziForu. If no explicit license or permission has been provided by a
+contributor, this notice should not be interpreted as creating such
+permission on that contributor's behalf.

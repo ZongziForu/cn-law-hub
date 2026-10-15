@@ -1,378 +1,201 @@
-# CN Law Hub Temporary Competition License v1.1
-
-Copyright © 2026 ZongziForu
-
-Effective Date: August 19, 2026
-
-Transition Time: September 21, 2026, 00:00:00 China Standard Time (UTC+8)
-
----
-
-## 1. Purpose
-
-CN Law Hub is a source-available Chinese legal research and retrieval project developed with contributions from both the project maintainer and community contributors.
-
-This License is intended to:
-
-1. allow free general use of the portions of CN Law Hub authored by ZongziForu;
-2. temporarily restrict those portions from being used to develop or operate entries in the **第四届大学生数据法治实验模型竞赛**;
-3. respect the independent rights of community contributors in their own contributions; and
-4. automatically release the Licensor-Owned Core under the Apache License 2.0 after the Competition submission deadline.
-
----
-
-## 2. Definitions
-
-### 2.1 “Licensor”
-
-“Licensor” means **ZongziForu**, the original author and maintainer of CN Law Hub.
-
-### 2.2 “Software”
-
-“Software” means the CN Law Hub repository, including source code, scripts, Agent Skills, prompts, documentation, configurations, utilities, retrieval infrastructure, and other materials contained in the repository.
-
-### 2.3 “Licensor-Owned Core”
-
-“Licensor-Owned Core” means all original portions of CN Law Hub authored by the Licensor and for which the Licensor owns the applicable copyright.
-
-This includes, without limitation:
-
-1. the original three legal database integrations implemented by the Licensor;
-2. the overall CN Law Hub Agent Skill architecture;
-3. original `SKILL.md` content and other original instructions, descriptions, prompts, routing logic, and tool-use guidance;
-4. caching infrastructure;
-5. cache management and cache invalidation logic;
-6. data cleaning and preprocessing logic;
-7. normalization and canonicalization logic;
-8. retrieval, request, parsing, storage, export, and processing infrastructure;
-9. common utilities and shared abstractions;
-10. source-selection, fallback, verification, and orchestration logic;
-11. original documentation authored by the Licensor; and
-12. subsequent modifications to the foregoing authored by the Licensor.
-
-For avoidance of doubt, the Licensor-Owned Core does **not** include independently copyrightable portions authored by third-party contributors merely because those portions have been merged into the CN Law Hub repository.
-
-### 2.4 “Contributor Components”
-
-“Contributor Components” means independently copyrightable code or other material authored by third-party contributors.
-
-In particular, the following crawler or source-adapter implementations are identified as Contributor Components to the extent they were authored by third-party contributors:
-
-1. **国务院政策文件库 crawler / adapter**
-   Source: `sousuo.www.gov.cn/zcwjk/policyDocumentLibrary`
-
-2. **司法部行政法规库 crawler / adapter**
-   Source: `xzfg.moj.gov.cn`
-
-3. **党内法规库 crawler / adapter**
-   Source: `www.12371.cn/special/dnfg/`
-
-4. **国防部法规文库 crawler / adapter**
-   Source: `www.mod.gov.cn/gfbw/fgwx/`
-
-5. **税务法规库 crawler / adapter**
-   Source: `fgk.chinatax.gov.cn`
-
-6. **生态环境部法规规章 crawler / adapter**
-   Source: `mee.gov.cn/ywgz/fgbz/`
-
-7. **最高人民法院发布栏目 crawler / adapter**
-
-Contributor Components are **not subject to the Temporary Competition Restriction in Section 4 merely by virtue of their inclusion in this repository**.
-
-The copyright and licensing status of each Contributor Component remains governed by the rights and permissions granted by its respective contributor.
-
-Nothing in this License purports to grant, restrict, relicense, or otherwise exercise rights in a Contributor Component that the Licensor does not own or have authority to license.
-
-Where a file contains both Licensor-Owned Core and Contributor Components, this License applies only to the portions authored by the Licensor.
-
-### 2.5 “Competition”
-
-“Competition” means the:
-
-**第四届大学生数据法治实验模型竞赛**
-
-### 2.6 “Competition Entry”
-
-“Competition Entry” means any model, AI agent, software system, application, service, prototype, demonstration, backend, retrieval system, submission, or other work developed, submitted, demonstrated, or operated for participation in the Competition.
-
-### 2.7 “Competition Use”
-
-“Competition Use” means using the Licensor-Owned Core, directly or indirectly, to:
-
-* develop;
-* build;
-* modify;
-* test;
-* evaluate;
-* validate;
-* operate;
-* host;
-* demonstrate;
-* support; or
-* submit
-
-a Competition Entry.
-
-Competition Use includes using the Licensor-Owned Core as a separate backend, API, local service, remote service, MCP tool, Agent Skill, command-line tool, retrieval service, data-processing service, or other technical dependency of a Competition Entry.
-
-### 2.8 “Transition Time”
-
-“Transition Time” means:
-
-**September 21, 2026, 00:00:00 China Standard Time (UTC+8).**
-
----
-
-## 3. General Permission Before the Transition Time
-
-Before the Transition Time, subject to Section 4, the Licensor grants any person obtaining a copy of the Licensor-Owned Core a worldwide, royalty-free, non-exclusive permission to:
-
-* use it for personal purposes;
-* use it for educational purposes;
-* use it for academic research;
-* use it for legal research;
-* use it for software development;
-* use it for testing and evaluation;
-* use it for commercial purposes;
-* copy it;
-* modify it;
-* create derivative works;
-* integrate it into software, AI agents, services, or other systems; and
-* redistribute copies or modified versions.
-
-Any redistribution of a substantial portion of the Licensor-Owned Core before the Transition Time must retain:
-
-1. this copyright notice; and
-2. this License.
-
-The permissions granted by this Section are subject only to the Temporary Competition Restriction described in Section 4 and the other terms of this License.
-
----
-
-## 4. Temporary Competition Restriction
-
-Before the Transition Time, the Licensor-Owned Core may **not**, without prior written permission from the Licensor, be used for Competition Use.
-
-In particular, before the Transition Time, a person may not use the Licensor-Owned Core to:
-
-1. directly incorporate CN Law Hub's Licensor-Owned Core into a Competition Entry;
-
-2. incorporate a modified or derivative version of the Licensor-Owned Core into a Competition Entry;
-
-3. use the Licensor-Owned Core as the legal retrieval, legal verification, legal data access, caching, normalization, cleaning, processing, orchestration, or Agent Skill infrastructure of a Competition Entry;
-
-4. invoke the Licensor-Owned Core from a Competition Entry through a local or remote API, service, process, command, MCP interface, Agent tool, Skill interface, or similar technical mechanism;
-
-5. deploy the Licensor-Owned Core separately while providing its functionality to a Competition Entry;
-
-6. copy or adapt Licensor-authored prompts, Skill definitions, retrieval logic, caching logic, normalization logic, source orchestration, or other protected implementation into a Competition Entry; or
-
-7. use a derivative work substantially based on the Licensor-Owned Core for a Competition Entry.
-
-This restriction applies regardless of whether the Licensor-Owned Core is technically packaged inside the Competition Entry or operated as a separate dependency or service.
-
-The Licensor may grant exceptions to this Section through explicit written permission.
-
----
-
-## 5. What the Competition Restriction Does Not Prohibit
-
-Section 4 does **not** prohibit a Competition participant or any other person from:
-
-* viewing the public CN Law Hub repository;
-* reading its source code;
-* studying its architecture;
-* evaluating CN Law Hub independently from a Competition Entry;
-* discussing or reviewing the project;
-* citing CN Law Hub in academic or technical materials;
-* learning general programming, retrieval, Agent, caching, normalization, or legal research techniques from the project;
-* using ideas, concepts, methods, algorithms, interfaces, or techniques that are not themselves protected expressions;
-* independently implementing similar functionality without copying protected portions of the Licensor-Owned Core; or
-* using Contributor Components where such use is permitted by the applicable contributor.
-
-The purpose of Section 4 is to prevent direct or indirect reuse of the Licensor-Owned Core as part of a Competition Entry, not to prohibit independent learning or independent implementation.
-
----
-
-## 6. Contributor Components
-
-The Temporary Competition Restriction applies only to the Licensor-Owned Core.
-
-It does **not** apply to independently copyrightable Contributor Components owned by third-party contributors.
-
-For avoidance of doubt, the Licensor does not claim exclusive copyright ownership merely because a third-party contribution has been merged into the CN Law Hub repository.
-
-A user wishing to copy, modify, redistribute, or use a Contributor Component must comply with the license or permission applicable to that Contributor Component.
-
-If a contributor has expressly licensed their contribution under Apache License 2.0 or another license, that license governs the contributor's contribution.
-
-If no explicit license or permission has been provided by the contributor, this License should not be interpreted as creating such permission on the contributor's behalf.
-
----
-
-## 7. Mixed Files and Modifications
-
-A source file may contain contributions authored by multiple copyright holders.
-
-Where a file contains both:
-
-* Licensor-Owned Core; and
-* Contributor Components,
-
-the Temporary Competition Restriction applies only to the portions for which the Licensor owns the applicable rights.
-
-A third-party modification to a Licensor-authored file does not cause the Licensor's pre-existing code in that file to cease being part of the Licensor-Owned Core.
-
-Likewise, merging a third-party contribution into the repository does not by itself transfer that contributor's copyright to the Licensor.
-
----
-
-## 8. Automatic Transition to Apache License 2.0
-
-At the Transition Time:
-
-**the Temporary Competition Restriction automatically expires in its entirety.**
-
-From the Transition Time onward, all portions of the Licensor-Owned Core covered by this License are licensed by the Licensor under the:
-
-**Apache License, Version 2.0 (“Apache-2.0”).**
-
-No Competition-specific restriction contained in this License applies after the Transition Time.
-
-After the Transition Time, recipients may exercise all rights granted by Apache-2.0 with respect to the Licensor-Owned Core, subject solely to the terms and conditions of Apache-2.0.
-
-A copy of Apache License 2.0 should be included in this repository as:
-
-`LICENSE-APACHE`
-
-For clarity:
-
-**2026-09-20 23:59:59 CST and earlier:**
-The Licensor-Owned Core is governed by this Temporary Competition License.
-
-**2026-09-21 00:00:00 CST and later:**
-The Licensor-Owned Core is governed by Apache License 2.0.
-
-The change occurs automatically and does not require any additional action, commit, announcement, or approval by the Licensor.
-
----
-
-## 9. Official Legal Materials and External Data
-
-This License applies only to software, prompts, documentation, Agent Skills, and other original materials for which the Licensor owns or is authorized to exercise the applicable rights.
-
-This License does not claim ownership of, or grant rights in:
-
-* laws;
-* administrative regulations;
-* departmental rules;
-* judicial interpretations;
-* judicial documents;
-* policy documents;
-* Party regulations;
-* treaties;
-* government publications;
-* official database content;
-* third-party websites;
-* third-party APIs;
-* third-party datasets; or
-* other externally sourced materials.
-
-The fact that CN Law Hub retrieves, indexes, caches, downloads, cleans, normalizes, parses, exports, references, or processes external content does not cause that external content to become licensed under this License.
-
-External materials remain subject to applicable law and any terms or rights governing their respective sources.
-
----
-
-## 10. Third-Party Dependencies
-
-Third-party software libraries, packages, APIs, and other dependencies distributed with or used by CN Law Hub remain subject to their respective licenses.
-
-Nothing in this License alters, replaces, restricts, or expands the terms of a third-party license.
-
----
-
-## 11. Attribution
-
-Before the Transition Time, redistribution of a substantial portion of the Licensor-Owned Core must retain:
-
-**Copyright © 2026 ZongziForu**
-
-and a copy of this License.
-
-After the Transition Time, attribution and notice requirements are governed by Apache License 2.0.
-
-Nothing in this Section requires attribution for independently developed software that does not copy or distribute the Licensor-Owned Core.
-
----
-
-## 12. No Trademark or Endorsement License
-
-This License does not grant permission to use the names:
-
-* “CN Law Hub”; or
-* “ZongziForu”
-
-or any associated logo or branding in a way that falsely states or implies sponsorship, endorsement, certification, or official affiliation.
-
-Accurate attribution and truthful references to CN Law Hub are permitted.
-
----
-
-## 13. Termination Before the Transition Time
-
-Before the Transition Time, the permissions granted under Section 3 automatically terminate with respect to any person or entity that materially violates Section 4.
-
-Termination applies only to rights granted by the Licensor under this License and does not affect rights independently granted by third-party contributors.
-
-The Licensor may reinstate terminated permission through explicit written authorization.
-
-Regardless of any prior termination, at the Transition Time the Licensor-Owned Core becomes available under Apache License 2.0 according to Section 8.
-
----
-
-## 14. Disclaimer of Warranty
-
-THE LICENSOR-OWNED CORE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, ACCURACY, COMPLETENESS, AVAILABILITY, NON-INFRINGEMENT, OR FITNESS FOR LEGAL PRACTICE.
-
-CN LAW HUB IS A TECHNICAL INFORMATION-RETRIEVAL AND PROCESSING TOOL.
-
-IT DOES NOT CONSTITUTE LEGAL ADVICE AND DOES NOT GUARANTEE THAT ANY RETRIEVED LAW, REGULATION, POLICY, JUDICIAL MATERIAL, OR OTHER INFORMATION IS CURRENT, COMPLETE, OR APPLICABLE TO A PARTICULAR MATTER.
-
-TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE LICENSOR SHALL NOT BE LIABLE FOR ANY CLAIM, DAMAGE, LOSS, OR OTHER LIABILITY ARISING FROM OR RELATED TO THE LICENSOR-OWNED CORE OR ITS USE.
-
----
-
-## 15. Nature of This License
-
-Before the Transition Time, this License contains a specific field-of-use restriction relating to the Competition.
-
-Accordingly, before the Transition Time, the Licensor-Owned Core should be described as:
-
-**source-available software**
-
-rather than as software distributed under an OSI-approved open-source license.
-
-At and after the Transition Time, the Licensor-Owned Core is licensed under Apache License 2.0 and may be described accordingly.
-
----
-
-## 16. Entire Scope of the Temporary Restriction
-
-The Competition restriction in this License applies exclusively to:
-
-**the Licensor-Owned Core authored by ZongziForu.**
-
-It does not purport to impose a Competition restriction upon independently copyrightable community contributions owned by their respective contributors.
-
-The temporary restriction exists solely for the Competition identified in Section 2.5 and expires permanently at the Transition Time.
-
-No general prohibition on competition, commercial use, academic use, legal use, AI development, Agent development, or other fields of endeavor applies.
-
----
-
-CN Law Hub
-Temporary Competition License v1.1
-
-Copyright © 2026 ZongziForu
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+   1. Definitions.
+
+      "License" shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+
+      "Licensor" shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+
+      "Legal Entity" shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      "control" means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+
+      "You" (or "Your") shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+
+      "Source" form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+
+      "Object" form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+
+      "Work" shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+
+      "Derivative Works" shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+
+      "Contribution" shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, "submitted"
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as "Not a Contribution."
+
+      "Contributor" shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+
+      (d) If the Work includes a "NOTICE" text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+
+   END OF TERMS AND CONDITIONS
+
+   APPENDIX: How to apply the Apache License to your work.
+
+      To apply the Apache License to your work, attach the following
+      boilerplate notice, with the fields enclosed by brackets "[]"
+      replaced with your own identifying information. (Don't include
+      the brackets!)  The text should be enclosed in the appropriate
+      comment syntax for the file format. We also recommend that a
+      file or class name and description of purpose be included on the
+      same "printed page" as the copyright notice for easier
+      identification within third-party archives.
+
+   Copyright [yyyy] [name of copyright owner]
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
